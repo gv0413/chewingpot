@@ -1,6 +1,6 @@
 TexTube(유튜브 자막 데이터 분석을 통한 맛집 정보 제공 서비스)
 
-# vue-cli
+# textube
 
 ## Project setup
 ```
