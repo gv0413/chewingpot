@@ -1,6 +1,6 @@
 <template>
   <div>
-    <SearchForm/>
+    <router-view></router-view>
   </div>
 </template>
 
