@@ -19,7 +19,7 @@ export default {
         searchText : this.searchText
       }
       console.log(this.searchText);
-      var url = ''; //api 주소
+      var url = 'http://127.0.0.1:3000/restaurants'; //api 주소
       axios.post(url, data)
         .then(function(response) {
           console.log(response);

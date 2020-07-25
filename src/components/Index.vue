@@ -1,12 +1,16 @@
 <template>
-  <SearchForm></SearchForm>
+  <div>
+    <SearchForm></SearchForm>
+    <Restaurant></Restaurant>
+  </div>
 </template>
 
 <script>
-import SearchForm from '../components/SearchForm'
+import SearchForm from './SearchForm'
+import Restaurant from './Restaurant'
 
 export default {
-  components: {SearchForm}
+  components: {SearchForm, Restaurant}
 }
 </script>
 
