@@ -2,13 +2,13 @@
   <div>
     <div v-if="isLoaded">
       <div v-if="restaurantInfos && restaurantInfos.length">
-        <div v-for="(restaurantInfo, i) in restaurantInfos" :key="i">
+        <router-link v-for="(restaurantInfo, i) in restaurantInfos" :key="i" :to="{ name: 'detail', params: {restaurantId: restaurantInfo.id} }">
           <img src="http://via.placeholder.com/100x100" alt="sample img"> <br>
           Name: {{restaurantInfo.name}} <br>
           Location: {{restaurantInfo.location}} <br>
           category : {{restaurantInfo.category}} <br>
-          contact : {{restaurantInfo.contact}}
-        </div>
+          contact : {{restaurantInfo.contact}} <br>
+        </router-link>
       </div>
       <div v-else>
         No data
