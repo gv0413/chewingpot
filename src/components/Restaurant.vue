@@ -3,8 +3,10 @@
     <div v-if="isLoaded">
       <div v-if="restaurantInfos && restaurantInfos.length">
         <div v-for="(restaurantInfo, i) in restaurantInfos" :key="i">
-          Name: {{restaurantInfo.name}}
-          Location: {{restaurantInfo.location}}
+          Name: {{restaurantInfo.name}} <br>
+          Location: {{restaurantInfo.location}} <br>
+          category : {{restaurantInfo.category}} <br>
+          contact : {{restaurantInfo.contact}}
         </div>
       </div>
       <div v-else>
