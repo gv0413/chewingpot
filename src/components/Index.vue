@@ -1,16 +1,16 @@
 <template>
   <div>
-    <SearchForm></SearchForm>
-    <RestaurantCard></RestaurantCard>
+    <search-form></search-form>
+    <restaurant-cards></restaurant-cards>
   </div>
 </template>
 
 <script>
-import SearchForm from './SearchForm'
-import RestaurantCard from './restaurant/RestaurantCard'
+import SearchForm from './SearchForm.vue'
+import RestaurantCards from './restaurant/RestaurantCards.vue'
 
 export default {
-  components: {SearchForm, RestaurantCard}
+  components: {SearchForm, RestaurantCards}
 }
 </script>
 
