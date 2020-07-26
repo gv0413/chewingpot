@@ -1,9 +1,15 @@
 <template>
-  <div>
-    Restaurant 상세 페이지
-    <search-form></search-form>
-    <restaurant-card v-bind:restaurantInfo="restaurantInfo" ></restaurant-card>
-    <review-card></review-card>
+  <div> 
+    <div v-if="isRestaurantInfoLoaded && isReviewInfosLoaded" >
+      <search-form></search-form>
+      <restaurant-card v-bind:restaurantInfo="restaurantInfo" ></restaurant-card>
+      <div v-for="(reviewInfo, i) in reviewInfos" :key="i">
+        <review-card v-bind:reviewInfo="reviewInfo"/>
+      </div>
+    </div>
+    <div v-else>
+      Loading...
+    </div>
   </div>
 </template>
 
@@ -13,7 +19,6 @@ import SearchForm from '../SearchForm.vue';
 import RestaurantCard from './RestaurantCard.vue';
 import ReviewCard from '../review/ReviewCard.vue';
 
-//restaurant_id를 가지고 조회
 export default {
   components: {
     SearchForm, RestaurantCard, ReviewCard
@@ -26,18 +31,40 @@ export default {
   data: function() {
     return {
       restaurantInfo: {},
+      reviewInfos: [],
+      isRestaurantInfoLoaded: false,
+      isReviewInfosLoaded: false,
     }
   },
   created() {
     this.loadData()
+    this.loadReviews()
   },
   methods: {
     loadData: function() {
-      var url = `http://127.0.0.1:3000/restaurants/${this.restaurantId}`;
+      let url = `http://127.0.0.1:3000/restaurants/${this.restaurantId}`;
       axios.get(url)
         .then((response) => {
           this.restaurantInfo = response.data.data[0]
           console.log(this.restaurantInfo)
+          this.isRestaurantInfoLoaded = true
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    },
+    loadReviews : function() {
+      let url = `http://127.0.0.1:3000/restaurants/${this.restaurantId}/video_reviews`;
+      axios.get(url)
+        .then((response) => {
+          console.log('review')
+          for(let i=0; i<response.data.data.length; i++) {
+            this.reviewInfos[i] = response.data.data[i]
+          }
+          this.isReviewInfosLoaded = true
+        })
+        .catch((error) => {
+          console.log(error)
         })
     }
   }
