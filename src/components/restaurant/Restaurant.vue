@@ -6,6 +6,7 @@
       <div v-for="(reviewInfo, i) in reviewInfos" :key="i">
         <review-card v-bind:reviewInfo="reviewInfo"/>
       </div>
+      <restaurant-menu></restaurant-menu>
     </div>
     <div v-else>
       Loading...
@@ -18,10 +19,14 @@ import axios from 'axios'
 import SearchForm from '../SearchForm.vue';
 import RestaurantCard from './RestaurantCard.vue';
 import ReviewCard from '../review/ReviewCard.vue';
+import RestaurantMenu from '../RestaurantMenu.vue'
 
 export default {
   components: {
-    SearchForm, RestaurantCard, ReviewCard
+    SearchForm, 
+    RestaurantCard, 
+    ReviewCard,
+    RestaurantMenu
   },
   computed: {
     restaurantId: function() {
@@ -51,13 +56,13 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          this.isRestaurantInfoLoaded = true
         })
     },
     loadReviews : function() {
       let url = `http://127.0.0.1:3000/restaurants/${this.restaurantId}/video_reviews`;
       axios.get(url)
         .then((response) => {
-          console.log('review')
           for(let i=0; i<response.data.data.length; i++) {
             this.reviewInfos[i] = response.data.data[i]
           }
@@ -65,6 +70,7 @@ export default {
         })
         .catch((error) => {
           console.log(error)
+          this.isReviewInfosLoaded = true
         })
     }
   }
