@@ -19,7 +19,6 @@ import SearchForm from '../SearchForm.vue';
 import RestaurantCard from './RestaurantCard.vue';
 import ReviewCard from '../review/ReviewCard.vue';
 
-//restaurant_id를 가지고 조회
 export default {
   components: {
     SearchForm, RestaurantCard, ReviewCard
@@ -59,7 +58,6 @@ export default {
       axios.get(url)
         .then((response) => {
           console.log('review')
-          // console.log(response.data.data)
           for(let i=0; i<response.data.data.length; i++) {
             this.reviewInfos[i] = response.data.data[i]
           }

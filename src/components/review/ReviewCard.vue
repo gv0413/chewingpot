@@ -1,11 +1,10 @@
 <template>
   <div>
-    <!-- {{reviewInfo}} -->
+    <hr>
     썸네일 이미지 <br> <img :src="reviewInfo.video_thumbnail_url" alt="" width="100px" height="100px"> <br>
     채널 썸네일 이미지 <br> <img :src="reviewInfo.channel_thumbnail_url" alt="" width="100px" height="100px"> <br>
-    {{reviewInfo.title}}<br>
-    {{reviewInfo.channel_name}}<br> <br>
-    <hr>
+    제목 ㅣ{{reviewInfo.title}}<br>
+    채널명 ㅣ{{reviewInfo.channel_name}}<br> <br>
   </div>
 </template>
 
@@ -17,7 +16,6 @@ export default {
     }
   }
 }
-// /:id/video_reviews
 </script>
 
 <style>
