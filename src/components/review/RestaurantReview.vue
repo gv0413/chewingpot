@@ -3,6 +3,10 @@
     리뷰 상세 페이지
     <Header/>
     <iframe :src="`https://www.youtube.com/embed/${youtubeId}`" frameborder="0"></iframe>
+    <br>
+    {{reviewInfo.title}}<br>
+    {{reviewInfo.upload_date}}<br>
+    <!-- channel thumbnail, channel name 필요 -->
   </div>
 </template>
 
