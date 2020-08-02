@@ -8,7 +8,7 @@
         <review-card v-bind:reviewInfo="reviewInfo"/>
       </div>
       <restaurant-menu></restaurant-menu>     
-      <recommend-restaurant></recommend-restaurant> 
+      <recommend-restaurant v-bind:restaurantInfo="restaurantInfo"></recommend-restaurant> 
     </div>
     <div v-else>
       Loading...
