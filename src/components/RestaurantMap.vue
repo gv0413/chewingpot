@@ -1,5 +1,10 @@
 <template>
-  <div id="map" style="width:500px;height:400px;"></div>
+  <div>
+    <div id="map" style="width:500px;height:400px;"></div>
+    <button>
+      <a :href="`https://m.map.kakao.com/actions/searchView?q=${addressQuery}#!/MOPPPU,QNOMQLO/map/place`" target="_blank"> 카카오맵으로 이동</a>
+    </button>
+  </div>
 </template>
 
 <script>
@@ -9,10 +14,15 @@ export default {
       type: Object,
     }
   },
+  data: function() {
+    return {
+      addressQuery : this.restaurantInfo.location.split(' ').join('+'),
+    }
+  },
   mounted() { 
     window.kakao && window.kakao.maps ? this.initMap() : this.addScript();
   },
-  methods : { 
+  methods : {
     initMap() { 
       var container = document.getElementById('map');
       var options = { 
