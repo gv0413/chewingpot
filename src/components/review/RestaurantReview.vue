@@ -43,7 +43,7 @@ export default {
           this.youtubeUrl = this.reviewInfo.youtube_url.split('=')
           this.youtubeId = this.youtubeUrl[1]
           this.isReviewInfoLoaded = true
-        })
+        }) // TODO: reviewInfo에 watch 적용하여 youtubeUrl과 Id 파싱 로직을 api response context에서 분리
         .catch((error) => {
           console.log(error);
           this.isReviewInfoLoaded = true

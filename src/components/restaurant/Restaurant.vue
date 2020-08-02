@@ -3,10 +3,11 @@
     <div v-if="isRestaurantInfoLoaded && isReviewInfosLoaded" >
       <search-form></search-form>
       <restaurant-card v-bind:restaurantInfo="restaurantInfo" ></restaurant-card>
+      <restaurant-map v-bind:restaurantInfo="restaurantInfo"></restaurant-map>
       <div v-for="(reviewInfo, i) in reviewInfos" :key="i">
         <review-card v-bind:reviewInfo="reviewInfo"/>
       </div>
-      <restaurant-menu></restaurant-menu>
+      <restaurant-menu></restaurant-menu>      
     </div>
     <div v-else>
       Loading...
@@ -19,14 +20,16 @@ import axios from 'axios'
 import SearchForm from '../SearchForm.vue';
 import RestaurantCard from './RestaurantCard.vue';
 import ReviewCard from '../review/ReviewCard.vue';
-import RestaurantMenu from '../RestaurantMenu.vue'
+import RestaurantMenu from '../RestaurantMenu.vue';
+import RestaurantMap from '../RestaurantMap.vue';
 
 export default {
   components: {
     SearchForm, 
     RestaurantCard, 
     ReviewCard,
-    RestaurantMenu
+    RestaurantMenu,
+    RestaurantMap
   },
   computed: {
     restaurantId: function() {
