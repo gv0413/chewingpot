@@ -54,7 +54,6 @@ export default {
       axios.get(url)
         .then((response) => {
           this.restaurantInfo = response.data.data[0]
-          console.log(this.restaurantInfo)
           this.isRestaurantInfoLoaded = true
         })
         .catch((error) => {

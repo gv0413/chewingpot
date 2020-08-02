@@ -1,7 +1,6 @@
 <template>
   <div>
-    리뷰 상세 페이지
-    <Header/>
+    <Header v-bind:restaurantName = "restaurantName"></Header>
     <iframe :src="`https://www.youtube.com/embed/${youtubeId}`" frameborder="0"></iframe>
     <br>
     {{reviewInfo.title}}<br>
@@ -23,16 +22,21 @@ export default {
       reviewInfo: [],
       youtubeUrl: [],
       youtubeId: '',
+      restaurantName: '',
       isReviewInfoLoaded: false
     }
   },
   computed: {
     reviewId: function() {
       return this.$route.params.reviewId
+    },
+    restaurantId: function() {
+      return this.$route.params.restaurantId
     }
   },
   created() {
     this.loadReview();
+    this.loadRestaurant();
   },
   methods: {
     loadReview : function() {
@@ -48,7 +52,20 @@ export default {
           console.log(error);
           this.isReviewInfoLoaded = true
         })
-    }
+    },
+    loadRestaurant: function() {
+      let url = `http://127.0.0.1:3000/restaurants/${this.restaurantId}`;
+      axios.get(url)
+        .then((response) => {
+          this.restaurantInfo = response.data.data[0]
+          this.isRestaurantInfoLoaded = true
+          this.restaurantName = this.restaurantInfo.name
+        })
+        .catch((error) => {
+          console.log(error);
+          this.isRestaurantInfoLoaded = true
+        })
+    },
   }
 }
 
