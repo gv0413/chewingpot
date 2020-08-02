@@ -3,7 +3,7 @@
     <div v-if="isRestaurantInfoLoaded && isReviewInfosLoaded" >
       <search-form></search-form>
       <restaurant-card v-bind:restaurantInfo="restaurantInfo" ></restaurant-card>
-      <restaurant-map></restaurant-map>
+      <restaurant-map v-bind:restaurantInfo="restaurantInfo"></restaurant-map>
       <div v-for="(reviewInfo, i) in reviewInfos" :key="i">
         <review-card v-bind:reviewInfo="reviewInfo"/>
       </div>
