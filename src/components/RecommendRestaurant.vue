@@ -1,6 +1,20 @@
 <template>
   <div>
-    맛집 추천 컴포넌트
+    <div v-if="isRecommendedRestaurantsLoaded" >
+      <div v-for="(recommendedRestaurant, i) in recommendedRestaurants" :key="i">
+        <div v-if="recommendedRestaurant.id !== restaurantInfo.id">
+          <hr>
+          맛집 추천 컴포넌트 <br>
+          {{recommendedRestaurant.name}} <br>
+          {{recommendedRestaurant.category}}<br>
+          {{recommendedRestaurant.contact}}<br>
+          {{recommendedRestaurant.location}}<br>
+        </div>
+      </div>
+    </div>
+    <div v-else>
+      Loading...
+    </div>
   </div>
 </template>
 
@@ -11,7 +25,7 @@ export default {
   data: function() {
     return {
       recommendedRestaurants: [],
-      isLoaded: false
+      isRecommendedRestaurantsLoaded: false
     }
   },
   props: {
@@ -35,12 +49,12 @@ export default {
           console.log(response.data.data[0]);
           for(let i in response.data.data) {
             this.recommendedRestaurants[i] = response.data.data[i]
-            this.isLoaded = true
+            this.isRecommendedRestaurantsLoaded = true
           }
         })
         .catch((error) => {
           console.log(error);
-          this.isLoaded = true
+          this.isRecommendedRestaurantsLoaded = true
         })
     },
   }
