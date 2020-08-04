@@ -7,7 +7,8 @@
       <div v-for="(reviewInfo, i) in reviewInfos" :key="i">
         <review-card v-bind:reviewInfo="reviewInfo"/>
       </div>
-      <restaurant-menu></restaurant-menu>      
+      <restaurant-menu></restaurant-menu>     
+      <recommend-restaurant v-bind:restaurantInfo="restaurantInfo"></recommend-restaurant> 
     </div>
     <div v-else>
       Loading...
@@ -22,6 +23,7 @@ import RestaurantCard from './RestaurantCard.vue';
 import ReviewCard from '../review/ReviewCard.vue';
 import RestaurantMenu from '../RestaurantMenu.vue';
 import RestaurantMap from '../RestaurantMap.vue';
+import RecommendRestaurant from '../RecommendRestaurant.vue';
 
 export default {
   components: {
@@ -29,11 +31,22 @@ export default {
     RestaurantCard, 
     ReviewCard,
     RestaurantMenu,
-    RestaurantMap
+    RestaurantMap,
+    RecommendRestaurant
   },
   computed: {
     restaurantId: function() {
       return this.$route.params.restaurantId
+    }
+  },
+  watch: {
+    restaurantId : function(){
+      this.restaurantInfo = {}
+      this.reviewInfos = []
+      this.isRestaurantInfoLoaded = false
+      this.isReviewInfosLoaded = false
+      this.loadData()
+      this.loadReviews()
     }
   },
   data: function() {
