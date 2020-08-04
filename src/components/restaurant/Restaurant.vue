@@ -39,6 +39,16 @@ export default {
       return this.$route.params.restaurantId
     }
   },
+  watch: {
+    restaurantId : function(){
+      this.restaurantInfo = {}
+      this.reviewInfos = []
+      this.isRestaurantInfoLoaded = false
+      this.isReviewInfosLoaded = false
+      this.loadData()
+      this.loadReviews()
+    }
+  },
   data: function() {
     return {
       restaurantInfo: {},

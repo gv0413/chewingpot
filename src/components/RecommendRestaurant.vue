@@ -4,11 +4,13 @@
       <div v-for="(recommendedRestaurant, i) in recommendedRestaurants" :key="i">
         <div v-if="recommendedRestaurant.id !== restaurantInfo.id">
           <hr>
-          맛집 추천 컴포넌트 <br>
-          {{recommendedRestaurant.name}} <br>
-          {{recommendedRestaurant.category}}<br>
-          {{recommendedRestaurant.contact}}<br>
-          {{recommendedRestaurant.location}}<br>
+          <router-link :to="{name: 'detail', params: {restaurantId: recommendedRestaurant.id}}">
+            맛집 추천 컴포넌트 <br>
+            {{recommendedRestaurant.name}} <br>
+            {{recommendedRestaurant.category}}<br>
+            {{recommendedRestaurant.contact}}<br>
+            {{recommendedRestaurant.location}}<br>
+          </router-link>
         </div>
       </div>
     </div>
