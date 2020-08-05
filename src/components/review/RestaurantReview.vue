@@ -2,14 +2,15 @@
   <div>
     <div v-if="isReviewInfoLoaded && iskeywordsInfoLoaded">
       <Header v-bind:restaurantName = "restaurantName"></Header>
-      <iframe :src="`https://www.youtube.com/embed/${youtubeId}`" frameborder="0" width="95%" height="200px"></iframe>
+      <youtube :video-id="youtubeId" ref="youtube" @playing="playing" :fitParent="true" :resize="true" ></youtube>
+      <button @click="seekTo(100)">play</button>
       <br>
       {{reviewInfo.title}}<br>
       {{reviewInfo.upload_date}}<br>
       {{reviewInfo.channel.name}}<br>
       <img :src="reviewInfo.channel.thumbnail_url" width="50px"><br>
       <div v-for="(keywordsInfo, i) in keywordsInfos" :key="i">
-        {{keywordsInfo.name}} - {{keywordsInfo.video_time}}
+        <button @click="seekTo(timeToNumber(keywordsInfo.video_time))">{{keywordsInfo.name}}</button>
       </div>
     </div>
     <div v-else>
@@ -43,6 +44,9 @@ export default {
     },
     restaurantId: function() {
       return this.$route.params.restaurantId
+    },
+    player() {
+      return this.$refs.youtube.player
     }
   },
   created() {
@@ -91,6 +95,15 @@ export default {
           console.log(error);
           this.iskeywordsInfoLoaded = true
         })
+    },
+    seekTo(seekTime) {
+      this.player.seekTo(seekTime)
+    },
+    playing() {
+    },
+    timeToNumber(timeString) {
+      const parsedString = timeString.split(':')
+      return parseInt(parsedString[0]*3600) + parseInt(parsedString[1]*60) + parseInt(parsedString[2]);
     }
   }
 }
