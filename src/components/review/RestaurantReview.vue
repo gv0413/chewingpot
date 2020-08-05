@@ -1,11 +1,12 @@
 <template>
   <div>
     <Header v-bind:restaurantName = "restaurantName"></Header>
-    <iframe :src="`https://www.youtube.com/embed/${youtubeId}`" frameborder="0"></iframe>
+    <iframe :src="`https://www.youtube.com/embed/${youtubeId}`" frameborder="0" width="95%" height="200px"></iframe>
     <br>
     {{reviewInfo.title}}<br>
     {{reviewInfo.upload_date}}<br>
-    <!-- channel thumbnail, channel name 필요 -->
+    {{reviewInfo.channel.name}}<br>
+    <img :src="reviewInfo.channel.thumbnail_url" width="50px">
   </div>
 </template>
 
