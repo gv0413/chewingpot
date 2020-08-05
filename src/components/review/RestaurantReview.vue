@@ -22,9 +22,11 @@ export default {
     return {
       reviewInfo: [],
       youtubeUrl: [],
+      reviewKeywords: [],
       youtubeId: '',
       restaurantName: '',
-      isReviewInfoLoaded: false
+      isReviewInfoLoaded: false,
+      isreviewKeywordsLoaded : false
     }
   },
   computed: {
@@ -38,6 +40,7 @@ export default {
   created() {
     this.loadReview();
     this.loadRestaurant();
+    this.loadKeywords();
   },
   methods: {
     loadReview : function() {
@@ -67,6 +70,18 @@ export default {
           this.isRestaurantInfoLoaded = true
         })
     },
+    loadKeywords: function() {
+      let url =  `http://127.0.0.1:3000/video_reviews/${this.reviewId}/keywords`;
+      axios.get(url)
+        .then((response) => {
+          this.reviewKeywords = response.data.data
+          this.isreviewKeywordsLoaded = true
+        })
+        .catch((error) => {
+          console.log(error);
+          this.isreviewKeywordsLoaded = true
+        })
+    }
   }
 }
 
