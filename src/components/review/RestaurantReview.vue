@@ -3,7 +3,7 @@
     <div v-if="isReviewInfoLoaded && iskeywordsInfoLoaded">
       <Header v-bind:restaurantName = "restaurantName"></Header>
       <youtube :video-id="youtubeId" ref="youtube" @playing="playing" :fitParent="true" :resize="true" ></youtube>
-      <button @click="seekTo(100)">play</button>
+      <button @click="seekTo()">play</button>
       <br>
       {{reviewInfo.title}}<br>
       {{reviewInfo.upload_date}}<br>
