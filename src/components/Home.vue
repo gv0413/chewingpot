@@ -1,11 +1,16 @@
 <template>
   <div>
     <Header></Header>
-    <!-- video  -->
-    <restaurantReview></restaurantReview>
-    {{reviewInfo}}
-    <!-- restaurant info  -->
-    <restaurantInfo></restaurantInfo>
+    <div v-if="isReviewInfosLoaded">
+      <div v-for="(reviewInfo, i) in reviewInfos" :key="i">
+        <restaurantReview v-bind:reviewInfo="reviewInfo"></restaurantReview>
+        <restaurantInfo v-bind:reviewInfo="reviewInfo"></restaurantInfo>
+        <hr>
+      </div>
+    </div>
+    <div v-else>
+      Loading...
+    </div>
   </div>
 </template>
 
@@ -23,8 +28,8 @@ export default {
   },
   data: function() {
     return {
-      reviewInfo: {},
-      isReviewInfoLoaded: false
+      reviewInfos: [],
+      isReviewInfosLoaded: false,
     }
   },
   created() {
@@ -35,16 +40,14 @@ export default {
       let url = 'http://127.0.0.1:3000/video_reviews';
       axios.get(url)
         .then((response) => {
-          for(let i in response.data.data) {
-            this.reviewInfo = response.data.data[i]
-            this.isReviewInfoLoaded = true
-          }
+          this.reviewInfos = response.data.data
+          this.isReviewInfosLoaded = true
         })
         .catch((error) => {
           console.log(error);
-          this.isReviewInfoLoaded = true
+          this.isReviewInfosLoaded = true
         })
-    }
+    },
   }
 }
 </script>
