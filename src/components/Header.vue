@@ -1,5 +1,5 @@
 <template>
-  <div>{{restaurantName}}</div>
+  <div>Chewing Pot</div>
 </template>
 
 <script>
