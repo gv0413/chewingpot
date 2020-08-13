@@ -1,5 +1,5 @@
 <template>
-  <div>Chewing Pot</div>
+  <div class="header text-center">Chewing Pot</div>
 </template>
 
 <script>
