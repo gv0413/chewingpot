@@ -3,8 +3,9 @@
     <Header></Header>
     <div v-if="isReviewInfosLoaded">
       <div v-for="(reviewInfo, i) in reviewInfos" :key="i">
-        <restaurantReview v-bind:reviewInfo="reviewInfo"></restaurantReview>
-        <restaurantInfo v-bind:reviewInfo="reviewInfo"></restaurantInfo>
+        <restaurantReview v-model="parentValue" v-bind:reviewInfo="reviewInfo" @parent="handleEvent"></restaurantReview>
+        <!-- {{parentValue}} -->
+        <restaurantInfo v-if="parentValue" v-bind:reviewInfo="reviewInfo"></restaurantInfo>
         <hr>
       </div>
     </div>
@@ -30,6 +31,7 @@ export default {
     return {
       reviewInfos: [],
       isReviewInfosLoaded: false,
+      parentValue: false,
     }
   },
   created() {
@@ -47,6 +49,9 @@ export default {
           console.log(error);
           this.isReviewInfosLoaded = true
         })
+    },
+    handleEvent: function(event) {
+      this.parentValue = event
     },
   }
 }
