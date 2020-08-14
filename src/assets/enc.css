@@ -121,12 +121,12 @@ button {outline: 0;}
 .theme-btn { border-radius: 14px; padding: 5px 12px; background-color: #fff; color: #F84C1C; border: 1px solid #F84C1C;}
 .theme-btn:hover { background-color: #fce0e7; color: #F84C1C; border: 1px solid white;}
 .theme-btn:focus { background-color: #F84C1C; color: white; border: 1px solid white;}
-.chewing-time-btn-wrap { height: 74px; overflow-y: scroll; padding-top: 8px;}
+.chewing-time-btn-wrap { height: 76px; overflow-y: scroll; padding-top: 8px;}
 .chewing-time-btn-wrap::-webkit-scrollbar { width: 6px;}
 .chewing-time-btn-wrap::-webkit-scrollbar-thumb { background-color: #999999; opacity: 0.3; border-radius: 13px;}
 .chewing-time-btn-wrap::-webkit-scrollbar-track { background-color: #fff;}
 
-.empty-chewing-time { line-height: 74px;}
+.empty-chewing-time { line-height: 76px;}
 .chewing-time-btn {float: left; padding: 5px 10px; margin-right: 8px; border-radius: 14px; background-color: #fff; color: #2f2f2f; border: 1px solid #5a5a5a; cursor: pointer;}
 .chewing-time-btn:last-child { margin-bottom: 8px;}
 .chewing-time-btn:focus { background-color: #FCE9E7; color: #F84C1C; border: 1px solid white;}
