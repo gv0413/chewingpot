@@ -1,8 +1,8 @@
 <template>
   <div class="wrap">
-    <div class="review-info-wrap">
+    <div class="review-info-wrap mt-1">
       <img class="channel-img" :src="reviewInfo.channels.thumbnail_url" width="50px"><br>
-      <div>
+      <div class="width-100">
         <p class="review-title t_bk">{{reviewInfo.title}}</p>
         <p class="left t_dgray">{{reviewInfo.channels.name}}</p>
         <p class="right t_dgray">{{reviewInfo.upload_date.split('T')[0]}}</p>
@@ -14,8 +14,6 @@
       <button class="detail-btn center"> 영상에서 메뉴 보기</button>
       <button class="detail-btn center" @click="updateValue"> 식당 정보 보기</button> 
     </div>
-    <hr class="mb-1">
-    <!-- <button @click="seekTo()">play</button>   -->
     <div v-for="(keyword, i) in keywords" :key="i">
       <button @click="seekTo(timeToNumber(keyword.video_time))">{{keyword.name}}</button>
     </div>  
@@ -28,6 +26,9 @@ export default {
     reviewInfo: {
       type: Object
     },
+    index: {
+      type: Number
+    }
   },
   data: function() {
     return {
@@ -57,7 +58,9 @@ export default {
     },
     updateValue: function () {
       this.isShowable = !this.isShowable
-      this.$emit('parent', this.isShowable);
+      const parameter = {isRestaurantInfoFolded: this.isShowable, index: this.index}
+      console.log('parameter = ', parameter)
+      this.$emit('parent', parameter);
     }
   }
 }

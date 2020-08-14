@@ -1,11 +1,11 @@
 <template>
   <div>
     <Header></Header>
+    <Theme></Theme>
     <div v-if="isReviewInfosLoaded">
       <div v-for="(reviewInfo, i) in reviewInfos" :key="i">
-        <restaurantReview v-model="parentValue" v-bind:reviewInfo="reviewInfo" @parent="handleEvent"></restaurantReview>
-        <!-- {{parentValue}} -->
-        <restaurantInfo v-if="parentValue" v-bind:reviewInfo="reviewInfo"></restaurantInfo>
+        <restaurantReview v-bind:reviewInfo="reviewInfo" v-bind:index="i" @parent="handleEvent"></restaurantReview>
+        <restaurantInfo v-if="isRestaurantInfoFoldeds[i]" v-bind:reviewInfo="reviewInfo"></restaurantInfo>
         <hr>
       </div>
     </div>
@@ -20,18 +20,20 @@ import axios from 'axios'
 import Header from './Header.vue'
 import RestaurantReview from './RestaurantReview.vue'
 import RestaurantInfo from './RestaurantInfo.vue'
+import Theme from './Theme.vue'
 
 export default {
   components: {
     Header,
     RestaurantReview,
-    RestaurantInfo
+    RestaurantInfo,
+    Theme
   },
   data: function() {
     return {
       reviewInfos: [],
       isReviewInfosLoaded: false,
-      parentValue: false,
+      isRestaurantInfoFoldeds: [],
     }
   },
   created() {
@@ -44,6 +46,10 @@ export default {
         .then((response) => {
           this.reviewInfos = response.data.data
           this.isReviewInfosLoaded = true
+          this.isRestaurantInfoFoldeds = []
+          for(let i=0; i<this.reviewInfos.length; i++) {
+            this.isRestaurantInfoFoldeds.push(false)
+          }
         })
         .catch((error) => {
           console.log(error);
@@ -51,7 +57,13 @@ export default {
         })
     },
     handleEvent: function(event) {
-      this.parentValue = event
+      console.log(event)
+      const {isRestaurantInfoFolded, index} = event
+      console.log(isRestaurantInfoFolded)
+      console.log(index)
+      this.isRestaurantInfoFoldeds[index] = isRestaurantInfoFolded
+      console.log(this.isRestaurantInfoFoldeds[index])
+      console.log(this.isRestaurantInfoFoldeds)
     },
   }
 }
