@@ -1,12 +1,11 @@
 <template>
-  <div>
+  <div class="background">
     <Header></Header>
     <Theme></Theme>
     <div v-if="isReviewInfosLoaded">
       <div v-for="(reviewInfo, i) in reviewInfos" :key="i">
         <restaurantReview v-bind:reviewInfo="reviewInfo" v-bind:index="i" @parent="handleEvent"></restaurantReview>
         <restaurantInfo v-if="isRestaurantInfoFoldeds[i]" v-bind:reviewInfo="reviewInfo"></restaurantInfo>
-        <hr>
       </div>
     </div>
     <div v-else>
