@@ -1,9 +1,5 @@
-*{
-  margin: 0;
-  padding: 0;
-  font-size: 14px;
-  font-family: Montserrat, Helvetica, sans-serif ;
-}
+@font-face { font-family: Montserrat; src:url('./fonts/Montserrat-Regular.ttf');}
+*{ margin: 0; padding: 0; font-size: 14px; font-family: Montserrat, sans-serif; }
 button {outline: 0;}
 /* primary */
 .bc-primary{background-color: #F84C1C;}
@@ -61,6 +57,7 @@ button {outline: 0;}
 .pb-3 { padding-bottom: 3rem;}
 .pb-4 { padding-bottom: 4rem;}
 .pb-5 { padding-bottom: 5rem;}
+.mr-10px {margin-right: 10px;}
 .pr-05 {padding-right: 0.5rem;}
 .pr-1 { padding-right: 1rem;}
 .pr-2 { padding-right: 2rem;}
@@ -118,7 +115,7 @@ button {outline: 0;}
 .review-info-wrap {display: flex; flex-direction: row; }
 .margin-0 { margin: 0 }
 .tag-container { height: 24px; padding-top: 5px;}
-.tag {margin-right: 8px;}
+.tag {margin-right: 12px;}
 .detail-btn { padding-top: 10px; padding-bottom: 10px; font-size: 14px; border: none; outline: 0; background-color: #fff; cursor: pointer;}
 .detail-btn:focus { border: none;}
 .theme-btn { border-radius: 14px; padding: 5px 12px; background-color: #fff; color: #F84C1C; border: 1px solid #F84C1C;}
