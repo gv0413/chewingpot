@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="wrap">
     <div v-if="isReviewInfoLoaded && iskeywordsInfoLoaded">
       <Header v-bind:restaurantName = "restaurantName"></Header>
       <youtube :video-id="youtubeId" ref="youtube" @playing="playing" :fitParent="true" :resize="true" ></youtube>

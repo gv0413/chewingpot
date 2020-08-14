@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import { router } from "./router/index.js";
 import VueYoutube from "vue-youtube";
+import "./assets/enc.css";
 
 Vue.use(VueYoutube);
 Vue.config.productionTip = false
