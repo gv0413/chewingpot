@@ -1,5 +1,5 @@
 <template>
-  <div class="container pt-10px between-component">
+  <div class="container pt-10px">
     <div class="wrap">
       <div class="review-info-wrap">
         <img class="channel-img" :src="reviewInfo.channels.thumbnail_url" width="50px"><br>
@@ -27,9 +27,6 @@
         </div>
       </div>
       <hr class="border-gry" style="clear:both;">
-      <div class="text-center">
-        <button class="detail-btn" @click="updateValue"> 식당 정보 보기</button> 
-      </div>
     </div>
   </div>
 </template>
@@ -70,12 +67,6 @@ export default {
       const seconds = parsedString[2].split('.')[0]
       return parseInt(hours*3600) + parseInt(minutes*60) + parseInt(seconds);
     },
-    updateValue: function () {
-      this.isShowable = !this.isShowable
-      const parameter = {isRestaurantInfoFolded: this.isShowable, index: this.index}
-      console.log('parameter = ', parameter)
-      this.$emit('parent', parameter);
-    }
   }
 }
 </script>

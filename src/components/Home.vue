@@ -4,8 +4,8 @@
     <Theme></Theme>
     <div v-if="isReviewInfosLoaded">
       <div v-for="(reviewInfo, i) in reviewInfos" :key="i">
-        <restaurantReview v-bind:reviewInfo="reviewInfo" v-bind:index="i" @parent="handleEvent"></restaurantReview>
-        <restaurantInfo v-if="isRestaurantInfoFoldeds[i]" v-bind:reviewInfo="reviewInfo"></restaurantInfo>
+        <restaurantReview v-bind:reviewInfo="reviewInfo"></restaurantReview>
+        <restaurantInfo v-bind:reviewInfo="reviewInfo"></restaurantInfo>
       </div>
     </div>
     <div v-else>
@@ -46,23 +46,11 @@ export default {
           this.reviewInfos = response.data.data
           this.isReviewInfosLoaded = true
           this.isRestaurantInfoFoldeds = []
-          for(let i=0; i<this.reviewInfos.length; i++) {
-            this.isRestaurantInfoFoldeds.push(false)
-          }
         })
         .catch((error) => {
           console.log(error);
           this.isReviewInfosLoaded = true
         })
-    },
-    handleEvent: function(event) {
-      console.log(event)
-      const {isRestaurantInfoFolded, index} = event
-      console.log(isRestaurantInfoFolded)
-      console.log(index)
-      this.isRestaurantInfoFoldeds[index] = isRestaurantInfoFolded
-      console.log(this.isRestaurantInfoFoldeds[index])
-      console.log(this.isRestaurantInfoFoldeds)
     },
   }
 }
