@@ -6,10 +6,9 @@
       </div>
       <hr class="border-gry">
       <div class="pt-pb-10" v-if="isRestaurantInfoFolded">
-        식당명 ㅣ {{reviewInfo.restaurants.name}} <br>
-        식당위치 ㅣ {{reviewInfo.restaurants.location}}<br>
-        연락처 ㅣ {{reviewInfo.restaurants.contact}}<br>
-        카테고리 ㅣ {{reviewInfo.restaurants.category}}<br>
+        <i class="fas fa-utensils mr-1 mb-05"></i>{{reviewInfo.restaurants.name}} ㅣ {{reviewInfo.restaurants.category}}<br>
+        <i class="fas fa-map-marker-alt mr-1 mb-05"></i>{{reviewInfo.restaurants.location}}<br>
+        <i class="fas fa-phone-alt mr-1"></i>{{reviewInfo.restaurants.contact}}<br>
       </div>
     </div>
     
