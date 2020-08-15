@@ -1,9 +1,10 @@
 <template>
   <div>
-    <div id="map" style="width:500px;height:400px;"></div>
-    <button>
+    <div id="map" style="width:100%; height:180px;"></div>
+    <!-- TODO : 다른 컴포넌트에서도 열리게 수정 필요 -->
+    <!-- <button>
       <a :href="`https://m.map.kakao.com/actions/searchView?q=${addressQuery}#!/MOPPPU,QNOMQLO/map/place`" target="_blank"> 카카오맵으로 이동</a>
-    </button>
+    </button> -->
   </div>
 </template>
 
