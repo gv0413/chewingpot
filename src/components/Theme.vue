@@ -4,6 +4,7 @@
       <p class="mb-05">츄잉픽, NOW!</p>
       <button v-for="(tpoCategory, i) in tpoCategories" 
               :key="i" 
+              @click="sendTPO(tpoCategory)"
               class="mr-10px theme-btn">
               {{tpoCategory}}
       </button>
@@ -18,6 +19,7 @@ export default {
   data: function() {
     return {
       tpoCategories: [],
+      tpoCategory: '',
       isTPOCategoriesLoaded: false,
     }
   },
@@ -36,6 +38,11 @@ export default {
           console.log(error);
           this.isTPOCategoriesLoaded = true
         })
+    },
+    sendTPO: function(tpoCategory) {
+      this.tpoCategory = tpoCategory
+      const parameter = {tpoCategory: this.tpoCategory}
+      this.$emit('parent', parameter)
     }
   }
 }

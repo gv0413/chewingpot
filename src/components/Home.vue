@@ -1,7 +1,7 @@
 <template>
   <div class="background">
     <Header></Header>
-    <Theme></Theme>
+    <Theme @parent="handleEvent"></Theme>
     <div v-if="isReviewInfosLoaded">
       <div v-for="(reviewInfo, i) in reviewInfos" :key="i">
         <restaurantReview v-bind:reviewInfo="reviewInfo"></restaurantReview>
@@ -31,6 +31,7 @@ export default {
   data: function() {
     return {
       reviewInfos: [],
+      tpoCategory: '',
       isReviewInfosLoaded: false,
       isRestaurantInfoFoldeds: [],
     }
@@ -40,7 +41,10 @@ export default {
   },
   methods: {
     loadData: function() {
-      let url = 'http://127.0.0.1:3000/video_reviews';
+      let url = 'http://127.0.0.1:3000/video_reviews?';
+      if (this.tpoCategory) {
+        url = `${url}category=${this.tpoCategory}`
+      }
       axios.get(url)
         .then((response) => {
           this.reviewInfos = response.data.data
@@ -52,6 +56,11 @@ export default {
           this.isReviewInfosLoaded = true
         })
     },
+    handleEvent: function(event) {
+      const {tpoCategory} = event
+      this.tpoCategory = tpoCategory
+      this.loadData()
+    }
   }
 }
 </script>
