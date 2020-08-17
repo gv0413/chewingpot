@@ -12,7 +12,6 @@
         <restaurant-map v-bind:restaurantInfo="reviewInfo.restaurants"></restaurant-map> 
       </div>
     </div>
-    
   </div>
 </template>
 

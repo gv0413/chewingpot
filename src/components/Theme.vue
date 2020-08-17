@@ -2,17 +2,42 @@
   <div class="container pt-pb-10 between-component">
     <div class="wrap">
       <p class="mb-05">츄잉픽, NOW!</p>
-      <button class="mr-10px theme-btn">데이트</button>
-      <button class="mr-10px theme-btn">몸보신</button>
-      <button class="mr-10px theme-btn">미슐랭가이드</button>
-      <button class="mr-10px theme-btn">분식</button>
+      <button v-for="(tpoCategory, i) in tpoCategories" 
+              :key="i" 
+              class="mr-10px theme-btn">
+              {{tpoCategory}}
+      </button>
     </div>
   </div>
 </template>
 
 <script>
-export default {
+import axios from 'axios'
 
+export default {
+  data: function() {
+    return {
+      tpoCategories: [],
+      isTPOCategoriesLoaded: false,
+    }
+  },
+  created() {
+    this.loadTPO();
+  },
+  methods: {
+    loadTPO: function() {
+      let url = 'http://127.0.0.1:3000/tpo_categories';
+      axios.get(url)
+        .then((response) => {
+          this.tpoCategories = response.data.data.tpo_categories
+          this.isTPOCategoriesLoaded = true
+        })
+        .catch((error) => {
+          console.log(error);
+          this.isTPOCategoriesLoaded = true
+        })
+    }
+  }
 }
 </script>
 
