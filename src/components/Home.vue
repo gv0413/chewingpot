@@ -1,0 +1,70 @@
+<template>
+  <div class="background">
+    <Header></Header>
+    <Theme @parent="handleEvent"></Theme>
+    <div v-if="isReviewInfosLoaded">
+      <div v-for="(reviewInfo, i) in reviewInfos" :key="i">
+        <restaurantReview v-bind:reviewInfo="reviewInfo"></restaurantReview>
+        <restaurantInfo v-bind:reviewInfo="reviewInfo"></restaurantInfo>
+      </div>
+    </div>
+    <div v-else>
+      Loading...
+    </div>
+  </div>
+</template>
+
+<script>
+import axios from 'axios'
+import Header from './Header.vue'
+import RestaurantReview from './RestaurantReview.vue'
+import RestaurantInfo from './RestaurantInfo.vue'
+import Theme from './Theme.vue'
+
+export default {
+  components: {
+    Header,
+    RestaurantReview,
+    RestaurantInfo,
+    Theme
+  },
+  data: function() {
+    return {
+      reviewInfos: [],
+      tpoCategory: '',
+      isReviewInfosLoaded: false,
+      isRestaurantInfoFoldeds: [],
+    }
+  },
+  created() {
+    this.loadData();
+  },
+  methods: {
+    loadData: function() {
+      let url = 'http://127.0.0.1:3000/video_reviews?';
+      if (this.tpoCategory) {
+        url = `${url}category=${this.tpoCategory}`
+      }
+      axios.get(url)
+        .then((response) => {
+          this.reviewInfos = response.data.data
+          this.isReviewInfosLoaded = true
+          this.isRestaurantInfoFoldeds = []
+        })
+        .catch((error) => {
+          console.log(error);
+          this.isReviewInfosLoaded = true
+        })
+    },
+    handleEvent: function(event) {
+      const {tpoCategory} = event
+      this.tpoCategory = tpoCategory
+      this.loadData()
+    }
+  }
+}
+</script>
+
+<style>
+
+</style>
