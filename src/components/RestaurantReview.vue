@@ -10,14 +10,12 @@
         </div>
       </div>
       <youtube class="mt-1" :video-id="reviewInfo.youtube_id" ref="youtube" @playing="playing" :fitParent="true" :resize="true" ></youtube>
-      <div class="tag-container f13">
-        <span class="tag">#삼겹살</span>
-        <span class="tag">#썸남</span>
-        <span class="tag">#썸녀</span>
-        <span class="tag">#남자친구</span>
-        <span class="tag">#여자친구</span>
-      </div>
-      <hr class="border-gry">
+      <span v-for="(keyword, i) in keywords" :key="i">
+        <span v-if="keyword.is_tpo==true" class="tag-container f13">
+          <span class="tag">#{{keyword.name}}</span>
+        </span>
+      </span>
+      <hr class="border-gry mt-5px">
       <div class="chewing-time-btn-wrap">
         <div v-if="keywords.length==0">
           <p class="text-center empty-chewing-time"> 등록된 메뉴 정보가 없습니다.</p>
