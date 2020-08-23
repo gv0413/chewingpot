@@ -2,11 +2,13 @@
   <div class="container pt-pb-10 between-component">
     <div class="wrap">
       <p class="mb-05">츄잉픽, NOW!</p>
-      <button v-for="(tpoCategory, i) in tpoCategories" 
+      <button v-for="(tc, i) in tpoCategories" 
               :key="i" 
-              @click="sendTPO(tpoCategory)"
-              class="mr-10px theme-btn">
-              {{tpoCategory}}
+              @click="sendTPO(tc)"
+              class="mr-10px theme-btn"
+              :class="{ on: tpoCategory === tc }"
+              >
+              {{tc}}
       </button>
     </div>
   </div>
