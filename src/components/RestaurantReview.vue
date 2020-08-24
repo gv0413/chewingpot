@@ -17,11 +17,11 @@
       </span>
       <hr class="border-gry mt-5px">
       <div class="chewing-time-btn-wrap">
+        <div v-for="(keyword, i) in keywords" :key="i">
+          <button v-if="keyword.video_time" class="pr-05 pl-05 chewing-time-btn" @click="seekTo(timeToNumber(keyword.video_time))">{{keyword.name}}</button>
+        </div>
         <div v-if="keywords.length==0">
           <p class="text-center empty-chewing-time"> 등록된 메뉴 정보가 없습니다.</p>
-        </div>
-        <div v-else class="mr-05" v-for="(keyword, i) in keywords" :key="i">
-          <button class="pr-05 pl-05 chewing-time-btn" @click="seekTo(timeToNumber(keyword.video_time))">{{keyword.name}}</button>
         </div>
       </div>
       <hr class="border-gry" style="clear:both;">
