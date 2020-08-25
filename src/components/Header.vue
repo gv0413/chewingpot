@@ -1,14 +1,11 @@
 <template>
-  <div class="header text-center bc-white">Chewing Pot</div>
+  <div class="header text-center bc-white">
+    <img src="../assets/img/logo-name.png" alt="" class="logo">
+  </div>
 </template>
 
 <script>
 export default {
-  props: {
-    restaurantName : {
-      type: String,
-    }
-  },
 }
 </script>
 
