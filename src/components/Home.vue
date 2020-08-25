@@ -2,14 +2,11 @@
   <div class="background">
     <Header></Header>
     <Theme @parent="handleEvent"></Theme>
-    <div v-if="isReviewInfosLoaded">
-      <div v-for="(reviewInfo, i) in reviewInfos" :key="i">
+    <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="1000">
+      <div v-for="(reviewInfo, i) in data" :key="i">
         <restaurantReview v-bind:reviewInfo="reviewInfo"></restaurantReview>
         <restaurantInfo v-bind:reviewInfo="reviewInfo"></restaurantInfo>
       </div>
-    </div>
-    <div v-else>
-      Loading...
     </div>
   </div>
 </template>
@@ -30,36 +27,42 @@ export default {
   },
   data: function() {
     return {
-      reviewInfos: [],
+      data: [],
+      busy: false,
       tpoCategory: '',
-      isReviewInfosLoaded: false,
       isRestaurantInfoFoldeds: [],
+      cursorId: '',
     }
   },
   created() {
-    this.loadData();
   },
   methods: {
-    loadData: function() {
-      let url = 'http://127.0.0.1:3000/video_reviews?';
+    loadMore: function() {
+      this.busy = true
+      let url = `http://127.0.0.1:3000/video_reviews?cursorId=${this.cursorId}`;
       if (this.tpoCategory) {
-        url = `${url}category=${this.tpoCategory}`
+        url = `${url}&category=${this.tpoCategory}`
       }
       axios.get(url)
         .then((response) => {
-          this.reviewInfos = response.data.data
-          this.isReviewInfosLoaded = true
+          response.data.data.forEach(element => {
+            this.data.push(element)
+          })
           this.isRestaurantInfoFoldeds = []
+          this.cursorId = this.data[this.data.length - 1].id
         })
         .catch((error) => {
           console.log(error);
-          this.isReviewInfosLoaded = true
+        })
+        .finally(() => {
+          this.busy = false
         })
     },
     handleEvent: function(event) {
       const {tpoCategory} = event
       this.tpoCategory = tpoCategory
-      this.loadData()
+      this.data = []
+      this.loadMore()
     }
   }
 }
