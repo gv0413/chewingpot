@@ -2,7 +2,7 @@
   <div class="background">
     <Header></Header>
     <Theme @parent="handleEvent" v-bind:isNext="isNext"></Theme>
-    <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="1000" >
+    <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="0" >
       <div v-for="(reviewInfo, i) in data" :key="i">
         <restaurantReview v-bind:reviewInfo="reviewInfo"></restaurantReview>
         <restaurantInfo v-bind:reviewInfo="reviewInfo"></restaurantInfo>
@@ -50,13 +50,14 @@ export default {
     },
     loadMore: function() {
       if(this.prevData.length === 0) {
-        const result = window.confirm('해당 카테고리의 모든 컨텐츠를 보셨습니다.\n 다음 카테고리로 넘어가시겠습니까?');
+        const result = window.confirm('현재 카테고리의 모든 컨텐츠를 보셨습니다.\n다음 카테고리로 넘어가시겠습니까?');
         if (result) {
           this.isNext = true
           this.initParams()
         } else {
-          return []
+          this.prevData = [0]
         }
+        return
       }
       this.busy = true
       let url = `http://127.0.0.1:3000/video_reviews?cursorId=${this.cursorId}`;
