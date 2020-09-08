@@ -1,7 +1,7 @@
 <template>
   <div class="background">
     <Header></Header>
-    <Theme @parent="handleEvent"></Theme>
+    <Theme @parent="handleEvent" v-bind:isNext="isNext"></Theme>
     <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="1000" >
       <div v-for="(reviewInfo, i) in data" :key="i">
         <restaurantReview v-bind:reviewInfo="reviewInfo"></restaurantReview>
@@ -33,17 +33,29 @@ export default {
       isRestaurantInfoFoldeds: [],
       cursorId: '',
       prevData: [0,0,0,0,0],
+      isNext: false,
     }
   },
   created() {
   },
   methods: {
+    initParams: function () {
+      this.data = []
+      this.busy = false
+      this.tpoCategory = ''
+      this.isRestaurantInfoFoldeds = []
+      this.cursorId = ''
+      this.prevData = [0,0,0,0,0]
+    },
     loadMore: function() {
-      console.log(this.cursorId)
-      console.log(this.prevData)
-      if(this.prevData.length==0) {
-        console.log('다봤어, 다음 카테고리로 넘어가')
-        return []
+      if(this.prevData.length === 0) {
+        const result = window.confirm('해당 카테고리의 모든 컨텐츠를 보셨습니다.\n 다음 카테고리로 넘어가시겠습니까?');
+        if (result) {
+          this.isNext = true
+          this.initParams()
+        } else {
+          return []
+        }
       }
       this.busy = true
       let url = `http://127.0.0.1:3000/video_reviews?cursorId=${this.cursorId}`;
@@ -67,6 +79,7 @@ export default {
         })
     },
     handleEvent: function(event) {
+      this.isNext = false
       const {tpoCategory} = event
       this.tpoCategory = tpoCategory
       this.data = []
