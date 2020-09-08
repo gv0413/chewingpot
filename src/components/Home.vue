@@ -39,6 +39,7 @@ export default {
   created() {
   },
   methods: {
+    //NOTE : TPO category 넘어갈 때 params 초기화
     initParams: function () {
       this.data = []
       this.busy = false

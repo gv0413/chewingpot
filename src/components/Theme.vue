@@ -46,6 +46,7 @@ export default {
     isNext : function(val){
       if (val) {
         this.sendTPO((this.currentIndex + 1) % this.tpoCategories.length)
+        //NOTE : isNext가 바뀌면 다음 인덱스로 
       }
     }
   },
