@@ -125,7 +125,6 @@ body {
 .detail-btn:focus { border: none;}
 .theme-btn { border-radius: 14px; padding: 5px 12px; background-color: #fff; color: #F84C1C; border: 1px solid #F84C1C;}
 .theme-btn:hover { background-color: #fce0e7; color: #F84C1C; border: 1px solid white;}
-.theme-btn:focus { background-color: #F84C1C; color: white; border: 1px solid white;}
 .theme-btn.on {background-color: #F84C1C; color: white; border: 1px solid white;}
 .chewing-time-btn-wrap { height: 76px; overflow-y: scroll; padding-top: 8px;}
 .chewing-time-btn-wrap::-webkit-scrollbar { width: 6px;}

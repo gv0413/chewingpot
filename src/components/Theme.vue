@@ -4,12 +4,14 @@
       <p class="mb-05">츄잉픽, NOW!</p>
       <button v-for="(tc, i) in tpoCategories" 
               :key="i" 
-              @click="sendTPO(tc)"
+              @click="sendTPO(i)"
               class="mr-10px theme-btn"
               :class="{ on: tpoCategory === tc }"
               >
               {{tc}}
       </button>
+    </div>
+    <div>
     </div>
   </div>
 </template>
@@ -25,7 +27,13 @@ export default {
       isTPOCategoriesLoaded: false,
       view: {
         atTopOfPage: true
-      }
+      },
+      currentIndex: undefined
+    }
+  },
+  props: {
+    isNext: {
+      type: Boolean
     }
   },
   beforeMount() {
@@ -33,6 +41,14 @@ export default {
   },
   created() {
     this.loadTPO();
+  },
+  watch: {
+    isNext : function(val){
+      if (val) {
+        this.sendTPO((this.currentIndex + 1) % this.tpoCategories.length)
+        //NOTE : isNext가 바뀌면 다음 인덱스로 
+      }
+    }
   },
   methods: {
     loadTPO: function() {
@@ -47,8 +63,9 @@ export default {
           this.isTPOCategoriesLoaded = true
         })
     },
-    sendTPO: function(tpoCategory) {
-      this.tpoCategory = tpoCategory
+    sendTPO: function(tpoCategoryIndex) {
+      this.tpoCategory = this.tpoCategories[tpoCategoryIndex]
+      this.currentIndex = tpoCategoryIndex
       const parameter = {tpoCategory: this.tpoCategory}
       this.$emit('parent', parameter)
     },
