@@ -52,7 +52,7 @@ export default {
   },
   methods: {
     loadTPO: function() {
-      let url = 'http://127.0.0.1:3000/tpo_categories';
+      let url = '/api/tpo_categories';
       axios.get(url)
         .then((response) => {
           this.tpoCategories = response.data.data.tpo_categories
