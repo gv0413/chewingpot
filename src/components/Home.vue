@@ -60,7 +60,7 @@ export default {
         return
       }
       this.busy = true
-      let url = `http://127.0.0.1:3000/video_reviews?cursorId=${this.cursorId}`;
+      let url = `/api/video_reviews?cursorId=${this.cursorId}`;
       if (this.tpoCategory) {
         url = `${url}&category=${this.tpoCategory}`
       }
