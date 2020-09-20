@@ -43,7 +43,6 @@ export default {
     return {
       isShowable: false,
       playerVars: {
-        autoplay: 1,
         playsinline: 1
       },
     }
