@@ -9,7 +9,7 @@
           <p class="right t_dgray">{{reviewInfo.upload_date.split('T')[0]}}</p>
         </div>
       </div>
-      <youtube class="mt-1" :video-id="reviewInfo.youtube_id" ref="youtube" @playing="playing" :fitParent="true" :resize="true" ></youtube>
+      <youtube class="mt-1" :video-id="reviewInfo.youtube_id" ref="youtube" @playing="playing" :fitParent="true" :resize="true" :player-vars="playerVars"></youtube>
       <span v-for="(keyword, i) in keywords" :key="i">
         <span v-if="keyword.is_tpo==true" class="tag-container f13">
           <span class="tag">#{{keyword.name}}</span>
@@ -42,6 +42,9 @@ export default {
   data: function() {
     return {
       isShowable: false,
+      playerVars: {
+        playsinline: 1
+      },
     }
   },
   computed: {
