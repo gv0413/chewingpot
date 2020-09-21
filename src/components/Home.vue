@@ -5,7 +5,7 @@
     <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="0" >
       <div v-for="(reviewInfo, i) in data" :key="i">
         <restaurantReview v-bind:reviewInfo="reviewInfo"></restaurantReview>
-        <restaurantInfo v-bind:reviewInfo="reviewInfo"></restaurantInfo>
+        <restaurantInfo v-bind:reviewInfo="reviewInfo" v-bind:focusedInfoId="focusedInfoId" @sendOpenId="handleOpenEvent"></restaurantInfo>
       </div>
     </div>
   </div>
@@ -34,6 +34,7 @@ export default {
       cursorId: '',
       prevData: [0,0,0,0,0],
       isNext: false,
+      focusedInfoId: undefined,
     }
   },
   created() {
@@ -86,6 +87,9 @@ export default {
       this.tpoCategory = tpoCategory
       this.data = []
       this.loadMore()
+    },
+    handleOpenEvent: function(event) {
+      this.focusedInfoId = event
     }
   }
 }
