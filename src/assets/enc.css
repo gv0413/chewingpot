@@ -123,6 +123,7 @@ body {
 .tag {margin-right: 12px;}
 .detail-btn { padding-top: 10px; padding-bottom: 10px; font-size: 14px; border: none; outline: 0; background-color: #fff; cursor: pointer;}
 .detail-btn:focus { border: none;}
+.decoration-none {text-decoration: none !important; color: #1b2733;}
 .theme-btn { border-radius: 14px; padding: 5px 12px; background-color: #fff; color: #F84C1C; border: 1px solid #F84C1C;}
 .theme-btn:hover { background-color: #fce0e7; color: #F84C1C; border: 1px solid white;}
 .theme-btn.on {background-color: #F84C1C; color: white; border: 1px solid white;}
