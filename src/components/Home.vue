@@ -50,6 +50,9 @@ export default {
       this.prevData = [0,0,0,0,0]
     },
     loadMore: function() {
+      const dataIds = this.data.map(data => data.id)
+      const prevLoaded = dataIds.slice(50 * (Math.floor(dataIds.length / 50))).join()
+      
       if(this.prevData.length === 0) {
         const result = window.confirm('현재 카테고리의 모든 컨텐츠를 보셨습니다.\n다음 카테고리로 넘어가시겠습니까?');
         if (result) {
@@ -61,7 +64,8 @@ export default {
         return
       }
       this.busy = true
-      let url = `/api/video_reviews?cursorId=${this.cursorId}`;
+      
+      let url = `/api/video_reviews?prevLoaded=${prevLoaded}&prevLoadedLength=${this.data.length}`;
       if (this.tpoCategory) {
         url = `${url}&category=${this.tpoCategory}`
       }
