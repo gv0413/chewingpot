@@ -11,14 +11,14 @@
       </div>
       <youtube class="mt-1" :video-id="reviewInfo.youtube_id" ref="youtube" @playing="playing" :fitParent="true" :resize="true" :player-vars="playerVars"></youtube>
       <span v-for="(keyword, i) in keywords" :key="i">
-        <span v-if="keyword.is_tpo==true" class="tag-container f13">
+        <span v-if="keyword.is_tpo==true" class="tag-container f13" >
           <span class="tag">#{{keyword.name}}</span>
         </span>
       </span>
       <hr class="border-gry mt-5px">
       <div class="chewing-time-btn-wrap">
         <div v-for="(keyword, i) in keywords" :key="i">
-          <button v-if="keyword.video_time" class="pr-05 pl-05 chewing-time-btn" @click="seekTo(timeToNumber(keyword.video_time))">{{keyword.name}}</button>
+          <button v-if="keyword.video_time" class="pr-05 pl-05 chewing-time-btn" @click="seekTo(timeToNumber(keyword.video_time), keyword.name)">{{keyword.name}}</button>
         </div>
         <div v-if="keywords.length==0">
           <p class="text-center empty-chewing-time"> 등록된 메뉴 정보가 없습니다.</p>
@@ -56,8 +56,12 @@ export default {
     }
   },
   methods: {
-    seekTo(seekTime) {
+    sendSelectedKeywords(selectedKeyword) {
+      this.$emit('getSelectedKeywords', selectedKeyword)
+    },
+    seekTo(seekTime, selectedKeyword) {
       this.player.seekTo(seekTime)
+      this.sendSelectedKeywords(selectedKeyword)
     },
     playing() {
     },

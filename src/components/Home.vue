@@ -4,7 +4,7 @@
     <Theme @parent="handleEvent" v-bind:isNext="isNext"></Theme>
     <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="0" >
       <div v-for="(reviewInfo, i) in data" :key="i">
-        <restaurantReview v-bind:reviewInfo="reviewInfo"></restaurantReview>
+        <restaurantReview v-bind:reviewInfo="reviewInfo" @getSelectedKeywords="getSelectedKeywords"></restaurantReview>
         <restaurantInfo v-bind:reviewInfo="reviewInfo" v-bind:focusedInfoId="focusedInfoId" @sendOpenId="handleOpenEvent"></restaurantInfo>
       </div>
     </div>
@@ -32,6 +32,7 @@ export default {
       tpoCategory: '',
       isRestaurantInfoFoldeds: [],
       cursorId: '',
+      selectedKeywords: '',
       prevData: [0,0,0,0,0],
       isNext: false,
       focusedInfoId: undefined,
@@ -52,7 +53,6 @@ export default {
     loadMore: function() {
       const dataIds = this.data.map(data => data.id)
       const prevLoaded = dataIds.slice(50 * (Math.floor(dataIds.length / 50))).join()
-      
       if(this.prevData.length === 0) {
         const result = window.confirm('현재 카테고리의 모든 컨텐츠를 보셨습니다.\n다음 카테고리로 넘어가시겠습니까?');
         if (result) {
@@ -69,6 +69,9 @@ export default {
       if (this.tpoCategory) {
         url = `${url}&category=${this.tpoCategory}`
       }
+      if (this.selectedKeywords) {
+        url = `${url}&selectedKeywords=${this.selectedKeywords}`
+      }
       axios.get(url)
         .then((response) => {
           response.data.data.forEach(element => {
@@ -77,6 +80,7 @@ export default {
           this.isRestaurantInfoFoldeds = []
           this.prevData = response.data.data
           this.cursorId = this.data[this.data.length - 1].id
+          this.selectedKeywords = ''
         })
         .catch((error) => {
           console.log(error);
@@ -94,7 +98,15 @@ export default {
     },
     handleOpenEvent: function(event) {
       this.focusedInfoId = event
-    }
+    },
+    getSelectedKeywords(event) {
+      const selectedKeyword = event
+      if(this.selectedKeywords.length === 0) {
+        this.selectedKeywords += selectedKeyword
+      } else {
+        this.selectedKeywords += `,${selectedKeyword}`
+      }
+    } 
   }
 }
 </script>
