@@ -27,6 +27,7 @@ export default {
   },
   data: function() {
     return {
+      randomSeed: -1,
       data: [],
       busy: false,
       tpoCategory: '',
@@ -39,6 +40,7 @@ export default {
     }
   },
   created() {
+    this.createRandomSeed()
   },
   methods: {
     //NOTE : TPO category 넘어갈 때 params 초기화
@@ -65,7 +67,7 @@ export default {
       }
       this.busy = true
       
-      let url = `/api/video_reviews?prevLoaded=${prevLoaded}&prevLoadedLength=${this.data.length}`;
+      let url = `/api/video_reviews?randomSeed=${this.randomSeed}&prevLoaded=${prevLoaded}&prevLoadedLength=${this.data.length}`;
       if (this.tpoCategory) {
         url = `${url}&category=${this.tpoCategory}`
       }
@@ -106,6 +108,9 @@ export default {
       } else {
         this.selectedKeywords += `,${selectedKeyword}`
       }
+    },
+    createRandomSeed() {
+      this.randomSeed = Math.floor(Math.random() * 100)
     } 
   }
 }
