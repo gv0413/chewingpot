@@ -10,6 +10,9 @@
               >
               {{tc}}
       </button>
+      <button class="mr-10 theme-btn" 
+              @click="sendPin()"
+              :class="{on: tpoCategory === 'pin'}">북마크</button>
     </div>
     <div>
     </div>
@@ -66,6 +69,11 @@ export default {
     sendTPO: function(tpoCategoryIndex) {
       this.tpoCategory = this.tpoCategories[tpoCategoryIndex]
       this.currentIndex = tpoCategoryIndex
+      const parameter = {tpoCategory: this.tpoCategory}
+      this.$emit('parent', parameter)
+    },
+    sendPin: function() {
+      this.tpoCategory = 'pin'
       const parameter = {tpoCategory: this.tpoCategory}
       this.$emit('parent', parameter)
     },
