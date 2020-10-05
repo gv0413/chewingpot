@@ -2,14 +2,20 @@
   <div class="container pt-10px">
     <div class="wrap">
       <div class="review-info-wrap">
-        <img class="channel-img" :src="reviewInfo.channels.thumbnail_url" width="50px"><br>
-        <div class="width-100">
-          <p class="review-title t_bk">{{reviewInfo.title}}</p> {{reviewInfoId}}
-          <a href="javascript:void(0);" @click="togglePinId(reviewInfo.id)">
-            <i :class="{fas: isPin, far: !isPin}" class="fa-bookmark"></i>
-          </a>
-          <p class="left t_dgray">{{reviewInfo.channels.name}}</p>
-          <p class="right t_dgray">{{reviewInfo.upload_date.split('T')[0]}}</p>
+        <div>
+          <img class="channel-img" :src="reviewInfo.channels.thumbnail_url" width="50px"><br>
+        </div>
+        <div class="width-100 flex column">
+          <div class="flex">
+            <p class="review-title t_bk width-100">{{reviewInfo.title}}</p>
+            <a href="javascript:void(0);" class="chewing-pin-wrap" @click="togglePinId(reviewInfo.id)">
+              <i :class="{'t-primary': isPin, 't-secondary': !isPin}" class="fas fa-bookmark chewing-pin"></i>
+            </a>
+          </div>
+          <div>
+            <p class="left t_dgray">{{reviewInfo.channels.name}}</p>
+            <p class="right t_dgray">{{reviewInfo.upload_date.split('T')[0]}}</p>
+          </div>
         </div>
       </div>
       <youtube class="mt-1" :video-id="reviewInfo.youtube_id" ref="youtube" @playing="playing" :fitParent="true" :resize="true" :player-vars="playerVars"></youtube>
@@ -105,7 +111,6 @@ export default {
         localStorage.setItem(localStorageKey, pinIds)
       }
 
-      console.log(localStorage.getItem(localStorageKey))
       this.isPinned(id)
     },
     isPinned(id) {

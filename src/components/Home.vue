@@ -127,7 +127,6 @@ export default {
       if(tpoCategory === 'pin') {
         this.isPin = true
         this.loadPin()
-        console.log(localStorage.getItem('pinIds'))
       } else {
         this.isPin = false
         this.tpoCategory = tpoCategory
