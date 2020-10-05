@@ -1,7 +1,6 @@
 <template>
   <div :class="{ scrolled: !view.atTopOfPage }" class="container pt-pb-10 between-component chewingpick">
-    <div class="wrap">
-      <p class="mb-05">츄잉픽, NOW!</p>
+    <div class="wrap mb-05 pt-05">
       <button v-for="(tc, i) in tpoCategories" 
               :key="i" 
               @click="sendTPO(i)"
