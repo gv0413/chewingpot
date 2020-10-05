@@ -2,7 +2,13 @@
   <div class="background">
     <Header></Header>
     <Theme @parent="handleEvent" v-bind:isNext="isNext"></Theme>
-    <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="0" >
+    <div v-if="!isPin" v-infinite-scroll="loadMore" :infinite-scroll-disabled="busy" infinite-scroll-distance="100">
+      <div v-for="(reviewInfo, i) in data" :key="i">
+        <restaurantReview v-bind:reviewInfo="reviewInfo" @getSelectedKeywords="getSelectedKeywords"></restaurantReview>
+        <restaurantInfo v-bind:reviewInfo="reviewInfo" v-bind:focusedInfoId="focusedInfoId" @sendOpenId="handleOpenEvent"></restaurantInfo>
+      </div>
+    </div>
+    <div v-else>
       <div v-for="(reviewInfo, i) in data" :key="i">
         <restaurantReview v-bind:reviewInfo="reviewInfo" @getSelectedKeywords="getSelectedKeywords"></restaurantReview>
         <restaurantInfo v-bind:reviewInfo="reviewInfo" v-bind:focusedInfoId="focusedInfoId" @sendOpenId="handleOpenEvent"></restaurantInfo>
@@ -37,6 +43,7 @@ export default {
       prevData: [0,0,0,0,0],
       isNext: false,
       focusedInfoId: undefined,
+      isPin: false,
     }
   },
   created() {
@@ -51,6 +58,7 @@ export default {
       this.isRestaurantInfoFoldeds = []
       this.cursorId = ''
       this.prevData = [0,0,0,0,0]
+      this.isPin = false
     },
     loadMore: function() {
       const dataIds = this.data.map(data => data.id)
@@ -90,13 +98,42 @@ export default {
         .finally(() => {
           this.busy = false
         })
+      
+    },
+    loadPin: function() {
+      const reviewIds = JSON.parse("["+localStorage.getItem('pinIds')+"]")
+      let url = `/api/video_reviews/by-ids?reviewIds=${JSON.stringify(reviewIds)}`
+      this.busy = true
+      axios.get(url)
+        .then((response) => {
+          this.data = []
+          response.data.data.forEach(element => {
+            this.data.push(element)
+          })
+          this.isRestaurantInfoFoldeds = []
+          this.isScrollDisabled = true
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {
+          this.busy = false
+        })
     },
     handleEvent: function(event) {
       this.isNext = false
       const {tpoCategory} = event
-      this.tpoCategory = tpoCategory
-      this.data = []
-      this.loadMore()
+      
+      if(tpoCategory === 'pin') {
+        this.isPin = true
+        this.loadPin()
+        console.log(localStorage.getItem('pinIds'))
+      } else {
+        this.isPin = false
+        this.tpoCategory = tpoCategory
+        this.data = []
+        this.loadMore()
+      }
     },
     handleOpenEvent: function(event) {
       this.focusedInfoId = event

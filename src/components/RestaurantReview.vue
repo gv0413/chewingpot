@@ -4,7 +4,10 @@
       <div class="review-info-wrap">
         <img class="channel-img" :src="reviewInfo.channels.thumbnail_url" width="50px"><br>
         <div class="width-100">
-          <p class="review-title t_bk">{{reviewInfo.title}}</p>
+          <p class="review-title t_bk">{{reviewInfo.title}}</p> {{reviewInfoId}}
+          <a href="javascript:void(0);" @click="togglePinId(reviewInfo.id)">
+            <i :class="{fas: isPin, far: !isPin}" class="fa-bookmark"></i>
+          </a>
           <p class="left t_dgray">{{reviewInfo.channels.name}}</p>
           <p class="right t_dgray">{{reviewInfo.upload_date.split('T')[0]}}</p>
         </div>
@@ -45,6 +48,7 @@ export default {
       playerVars: {
         playsinline: 1
       },
+      isPin: false,
     }
   },
   computed: {
@@ -53,6 +57,19 @@ export default {
     },
     keywords() {
       return this.reviewInfo.keywords
+    },
+    reviewInfoId() {
+      return this.reviewInfo.id
+    }
+  },
+  mounted() {
+    this.isPinned(this.reviewInfoId)
+  },
+  watch: {
+    reviewInfoId(val) {
+      if (val) {
+        this.isPinned(val)
+      }
     }
   },
   methods: {
@@ -72,6 +89,37 @@ export default {
       const seconds = parsedString[2].split('.')[0]
       return parseInt(hours*3600) + parseInt(minutes*60) + parseInt(seconds);
     },
+    togglePinId(id) {
+      let pinIds = []
+      const localStorageKey = 'pinIds'
+      if (localStorage.getItem(localStorageKey)) {
+        pinIds = JSON.parse("["+localStorage.getItem(localStorageKey)+"]")
+      } 
+      const reviewIdx = pinIds.indexOf(id)
+
+      if(reviewIdx === -1) {
+        pinIds.push(id)
+        localStorage.setItem(localStorageKey, pinIds)
+      } else {
+        pinIds.splice(reviewIdx, 1)
+        localStorage.setItem(localStorageKey, pinIds)
+      }
+
+      console.log(localStorage.getItem(localStorageKey))
+      this.isPinned(id)
+    },
+    isPinned(id) {
+      let pinIds = []
+      const localStorageKey = 'pinIds'
+      if (localStorage.getItem(localStorageKey))
+      pinIds = JSON.parse("["+localStorage.getItem(localStorageKey)+"]")
+      const reviewIdx = pinIds.indexOf(id)
+      if(reviewIdx === -1) {
+        this.isPin = false
+      } else {
+        this.isPin = true
+      }
+    }
   }
 }
 </script>
