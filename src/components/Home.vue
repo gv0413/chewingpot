@@ -9,8 +9,9 @@
       </div>
     </div>
     <div v-else>
-      <div v-for="(reviewInfo, i) in data" :key="i">
-        <restaurantReview v-bind:reviewInfo="reviewInfo" @getSelectedKeywords="getSelectedKeywords"></restaurantReview>
+      <div v-if="data.length === 0" class="text-center bc-white pt-1"> 북마크에 등록된 영상이 없습니다. </div>
+      <div  v-for="(reviewInfo, i) in data" :key="i">
+        <restaurantReview v-bind:reviewInfo="reviewInfo"></restaurantReview>
         <restaurantInfo v-bind:reviewInfo="reviewInfo" v-bind:focusedInfoId="focusedInfoId" @sendOpenId="handleOpenEvent"></restaurantInfo>
       </div>
     </div>
