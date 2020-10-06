@@ -2,26 +2,35 @@
   <div class="container pt-10px">
     <div class="wrap">
       <div class="review-info-wrap">
-        <img class="channel-img" :src="reviewInfo.channels.thumbnail_url" width="50px"><br>
-        <div class="width-100">
-          <p class="review-title t_bk">{{reviewInfo.title}}</p>
-          <p class="left t_dgray">{{reviewInfo.channels.name}}</p>
-          <p class="right t_dgray">{{reviewInfo.upload_date.split('T')[0]}}</p>
+        <div>
+          <img class="channel-img" :src="reviewInfo.channels.thumbnail_url" width="50px"><br>
+        </div>
+        <div class="width-100 flex column">
+          <div class="flex">
+            <p class="review-title t_bk width-100">{{reviewInfo.title}}</p>
+            <a href="javascript:void(0);" class="chewing-pin-wrap" @click="togglePinId(reviewInfo.id)">
+              <i :class="{'t-primary': isPin, 't-secondary': !isPin}" class="fas fa-bookmark chewing-pin"></i>
+            </a>
+          </div>
+          <div>
+            <p class="left t_dgray">{{reviewInfo.channels.name}}</p>
+            <p class="right t_dgray">{{reviewInfo.upload_date.split('T')[0]}}</p>
+          </div>
         </div>
       </div>
-      <youtube class="mt-1" :video-id="reviewInfo.youtube_id" ref="youtube" @playing="playing" :fitParent="true" :resize="true" ></youtube>
+      <youtube class="mt-1 width-100" :video-id="reviewInfo.youtube_id" ref="youtube" @playing="playing" :fitParent="true" :resize="true" :player-vars="playerVars"></youtube>
       <span v-for="(keyword, i) in keywords" :key="i">
-        <span v-if="keyword.is_tpo==true" class="tag-container f13">
+        <span v-if="keyword.is_tpo==true" class="tag-container f13" >
           <span class="tag">#{{keyword.name}}</span>
         </span>
       </span>
       <hr class="border-gry mt-5px">
       <div class="chewing-time-btn-wrap">
+        <div v-for="(keyword, i) in keywords" :key="i">
+          <button v-if="keyword.video_time" class="pr-05 pl-05 chewing-time-btn" @click="seekTo(timeToNumber(keyword.video_time), keyword.name)">{{keyword.name}}</button>
+        </div>
         <div v-if="keywords.length==0">
           <p class="text-center empty-chewing-time"> 등록된 메뉴 정보가 없습니다.</p>
-        </div>
-        <div v-else class="mr-05" v-for="(keyword, i) in keywords" :key="i">
-          <button class="pr-05 pl-05 chewing-time-btn" @click="seekTo(timeToNumber(keyword.video_time))">{{keyword.name}}</button>
         </div>
       </div>
       <hr class="border-gry" style="clear:both;">
@@ -42,6 +51,10 @@ export default {
   data: function() {
     return {
       isShowable: false,
+      playerVars: {
+        playsinline: 1
+      },
+      isPin: false,
     }
   },
   computed: {
@@ -50,11 +63,28 @@ export default {
     },
     keywords() {
       return this.reviewInfo.keywords
+    },
+    reviewInfoId() {
+      return this.reviewInfo.id
+    }
+  },
+  mounted() {
+    this.isPinned(this.reviewInfoId)
+  },
+  watch: {
+    reviewInfoId(val) {
+      if (val) {
+        this.isPinned(val)
+      }
     }
   },
   methods: {
-    seekTo(seekTime) {
+    sendSelectedKeywords(selectedKeyword) {
+      this.$emit('getSelectedKeywords', selectedKeyword)
+    },
+    seekTo(seekTime, selectedKeyword) {
       this.player.seekTo(seekTime)
+      this.sendSelectedKeywords(selectedKeyword)
     },
     playing() {
     },
@@ -65,6 +95,36 @@ export default {
       const seconds = parsedString[2].split('.')[0]
       return parseInt(hours*3600) + parseInt(minutes*60) + parseInt(seconds);
     },
+    togglePinId(id) {
+      let pinIds = []
+      const localStorageKey = 'pinIds'
+      if (localStorage.getItem(localStorageKey)) {
+        pinIds = JSON.parse("["+localStorage.getItem(localStorageKey)+"]")
+      } 
+      const reviewIdx = pinIds.indexOf(id)
+
+      if(reviewIdx === -1) {
+        pinIds.push(id)
+        localStorage.setItem(localStorageKey, pinIds)
+      } else {
+        pinIds.splice(reviewIdx, 1)
+        localStorage.setItem(localStorageKey, pinIds)
+      }
+
+      this.isPinned(id)
+    },
+    isPinned(id) {
+      let pinIds = []
+      const localStorageKey = 'pinIds'
+      if (localStorage.getItem(localStorageKey))
+      pinIds = JSON.parse("["+localStorage.getItem(localStorageKey)+"]")
+      const reviewIdx = pinIds.indexOf(id)
+      if(reviewIdx === -1) {
+        this.isPin = false
+      } else {
+        this.isPin = true
+      }
+    }
   }
 }
 </script>

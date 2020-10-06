@@ -3,7 +3,9 @@ import App from './App.vue'
 import { router } from "./router/index.js";
 import VueYoutube from "vue-youtube";
 import "./assets/enc.css";
+import infiniteScroll from "vue-infinite-scroll"
 
+Vue.use(infiniteScroll)
 Vue.use(VueYoutube);
 Vue.config.productionTip = false
 
