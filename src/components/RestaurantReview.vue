@@ -52,7 +52,8 @@ export default {
     return {
       isShowable: false,
       playerVars: {
-        playsinline: 1
+        playsinline: 1,
+        origin: 'http://localhost:8080'
       },
       isPin: false,
     }
