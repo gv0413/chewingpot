@@ -18,7 +18,7 @@
           </div>
         </div>
       </div>
-      <youtube class="mt-1 width-100" :video-id="reviewInfo.youtube_id" ref="youtube" @playing="playing" :fitParent="true" :resize="true" :player-vars="playerVars"></youtube>
+      <youtube class="mt-1 width-100" :video-id="reviewInfo.youtube_id" ref="youtube" @playing="playing" :fitParent="true" :resize="true" :player-vars="playerVars" />
       <span v-for="(keyword, i) in keywords" :key="i">
         <span v-if="keyword.is_tpo==true" class="tag-container f13" >
           <span class="tag">#{{keyword.name}}</span>
@@ -53,7 +53,8 @@ export default {
       isShowable: false,
       playerVars: {
         playsinline: 1,
-        origin: 'http://localhost:8080'
+        origin: window.location.origin,
+        host: `${window.location.protocol}//www.youtube.com`,
       },
       isPin: false,
     }
