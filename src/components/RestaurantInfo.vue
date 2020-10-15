@@ -2,7 +2,7 @@
   <div class="container between-component">
     <div class="wrap">
       <div class="text-center">
-        <button class="detail-btn" @click="fold"> 식당 정보 보기</button> 
+        <button class="detail-btn" @click="fold(reviewInfo.id, reviewInfo.title, reviewInfo.restaurants.id, reviewInfo.restaurants.name)"> 식당 정보 보기</button> 
       </div>
       <hr class="border-gry">
       <div class="pt-pb-10" v-if="isRestaurantInfoOpen">
@@ -25,7 +25,10 @@
             <i class="fas fa-exclamation-circle"></i>
             폐점한 식당입니다.
           </div>
-          <a :href="`tel:${reviewInfo.restaurants.contact}`" class="tel text-center" v-if="reviewInfo.restaurants && reviewInfo.restaurants.contact && !reviewInfo.restaurants.is_closed">
+          <a :href="`tel:${reviewInfo.restaurants.contact}`" 
+              class="tel text-center" 
+              v-if="reviewInfo.restaurants && reviewInfo.restaurants.contact && !reviewInfo.restaurants.is_closed" 
+              @click="addContactFbq(reviewInfo.id, reviewInfo.title, reviewInfo.restaurants.id, reviewInfo.restaurants.name)">
             <i class="fas fa-phone-alt" style="margin-right: 11px;"></i>전화하기<br>
           </a>
         </div>
@@ -61,11 +64,27 @@ export default {
     }
   },
   methods: {
-    fold: function(){
+    fold: function(reviewId, reviewTitle, restaurantId, restaurantName){
       this.isRestaurantInfoOpen = !this.isRestaurantInfoOpen
       if(this.isRestaurantInfoOpen) {
         this.$emit('sendOpenId', this.reviewInfo.id)
+        // eslint-disable-next-line no-undef
+        fbq('track', 'FindLocation', {
+          review_id : reviewId,
+          review_title: reviewTitle,
+          restaurant_id: restaurantId,
+          restaurant_name: restaurantName
+        })
       } 
+    },
+    addContactFbq: function(reviewId, reviewTitle, restaurantId, restaurantName) {
+      // eslint-disable-next-line no-undef
+      fbq('track', 'Contact', {
+        review_id : reviewId,
+        review_title: reviewTitle,
+        restaurant_id: restaurantId,
+        restaurant_name: restaurantName
+      })
     }
   }
 }
