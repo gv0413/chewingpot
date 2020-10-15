@@ -8,7 +8,7 @@
         <div class="width-100 flex column">
           <div class="flex">
             <p class="review-title t_bk width-100">{{reviewInfo.title}}</p>
-            <a href="javascript:void(0);" class="chewing-pin-wrap" @click="togglePinId(reviewInfo.id)">
+            <a href="javascript:void(0);" class="chewing-pin-wrap" @click="togglePinId(reviewInfo.id, reviewInfo.title)">
               <i :class="{'t-primary': isPin, 't-secondary': !isPin}" class="fas fa-bookmark chewing-pin"></i>
             </a>
           </div>
@@ -27,7 +27,8 @@
       <hr class="border-gry mt-5px">
       <div class="chewing-time-btn-wrap">
         <div v-for="(keyword, i) in keywords" :key="i">
-          <button v-if="keyword.video_time" class="pr-05 pl-05 chewing-time-btn" @click="seekTo(timeToNumber(keyword.video_time), keyword.name)">{{keyword.name}}</button>
+          <button v-if="keyword.video_time" class="pr-05 pl-05 chewing-time-btn" 
+                  @click="[seekTo(timeToNumber(keyword.video_time), keyword.name), addViewContentFbq(reviewInfo.id, reviewInfo.title, keyword.id, keyword.name)]">{{keyword.name}} </button>
         </div>
         <div v-if="keywords.length==0">
           <p class="text-center empty-chewing-time"> 등록된 메뉴 정보가 없습니다.</p>
@@ -70,6 +71,9 @@ export default {
       return this.reviewInfo.id
     }
   },
+  created() {
+    
+  },
   mounted() {
     this.isPinned(this.reviewInfoId)
   },
@@ -97,7 +101,7 @@ export default {
       const seconds = parsedString[2].split('.')[0]
       return parseInt(hours*3600) + parseInt(minutes*60) + parseInt(seconds);
     },
-    togglePinId(id) {
+    togglePinId(id, title) {
       let pinIds = []
       const localStorageKey = 'pinIds'
       if (localStorage.getItem(localStorageKey)) {
@@ -114,6 +118,14 @@ export default {
       }
 
       this.isPinned(id)
+      
+      if (pinIds.includes(id)){
+        // eslint-disable-next-line no-undef
+        fbq('track', 'AddToWishlist', {
+          content_ids: [String(id)],
+          content_name: title
+        })
+      }
     },
     isPinned(id) {
       let pinIds = []
@@ -126,6 +138,15 @@ export default {
       } else {
         this.isPin = true
       }
+    },
+    addViewContentFbq(reviewId, reviewTitle, keywordId, keywordName) {
+      // eslint-disable-next-line no-undef
+      fbq('track', 'ViewContent', {
+        review_id : reviewId,
+        review_title: reviewTitle,
+        keyword_id: keywordId,
+        content_name: keywordName
+      })
     }
   }
 }
