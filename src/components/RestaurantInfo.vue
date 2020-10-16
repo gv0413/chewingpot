@@ -2,7 +2,9 @@
   <div class="container between-component">
     <div class="wrap">
       <div class="text-center">
-        <button class="detail-btn" @click="fold(reviewInfo.id, reviewInfo.title, reviewInfo.restaurants.id, reviewInfo.restaurants.name)"> 식당 정보 보기</button> 
+        <button class="detail-btn" @click="fold(reviewInfo.id, reviewInfo.title, reviewInfo.restaurants.id, reviewInfo.restaurants.name)"> 
+          식당 정보 보기 <i class="ml-3px fas" :class="{'fa-angle-down': !isRestaurantInfoOpen, 'fa-angle-up': isRestaurantInfoOpen}"></i>
+        </button> 
       </div>
       <hr class="border-gry">
       <div class="pt-pb-10" v-if="isRestaurantInfoOpen">
