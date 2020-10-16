@@ -122,6 +122,7 @@ export default {
       if (pinIds.includes(id)){
         // eslint-disable-next-line no-undef
         fbq('track', 'AddToWishlist', {
+          content_type: 'product',
           content_ids: [String(id)],
           content_name: title
         })
