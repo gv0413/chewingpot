@@ -12,6 +12,11 @@
           <i class="fas fa-exclamation-circle"></i> 식당 정보가 등록되지 않았습니다.
         </div>
         <div v-else>
+          <a id="kakao-link-btn" @click="sendLink">
+            <img
+              src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"
+            />
+          </a>
           <i class="fas fa-utensils mr-1 mb-05"></i>{{reviewInfo.restaurants.name}} ㅣ {{reviewInfo.restaurants.category}}<br>
           <i class="fas fa-map-marker-alt mr-1 mb-05"></i>{{reviewInfo.restaurants.location}}<br>
           <p v-if="reviewInfo.restaurants.contact">
@@ -86,6 +91,41 @@ export default {
         review_title: reviewTitle,
         restaurant_id: restaurantId,
         restaurant_name: restaurantName
+      })
+    },
+    sendLink() {
+      window.Kakao.Link.sendDefault({
+        objectType: 'feed',
+        content: {
+          title: this.reviewInfo.restaurants.name,
+          description: this.reviewInfo.title,
+          imageUrl: this.reviewInfo.thumbnail_url,
+          link: {
+            mobileWebUrl: 'https://developers.kakao.com',
+            webUrl: 'https://developers.kakao.com',
+          },
+        },
+        // social: {
+        //   likeCount: 286,
+        //   commentCount: 45,
+        //   sharedCount: 845,
+        // },
+        buttons: [
+          {
+            title: '웹으로 보기',
+            link: {
+              mobileWebUrl: 'https://developers.kakao.com',
+              webUrl: 'https://developers.kakao.com',
+            },
+          },
+          // {
+          //   title: '앱으로 보기',
+          //   link: {
+          //     mobileWebUrl: 'https://developers.kakao.com',
+          //     webUrl: 'https://developers.kakao.com',
+          //   },
+          // },
+        ],
       })
     }
   }

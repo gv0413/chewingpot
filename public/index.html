@@ -7,6 +7,10 @@
     <link rel="icon" href="<%= BASE_URL %>logo.png">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
     <title>츄잉팟</title>
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <script>
+      Kakao.init('<%= VUE_APP_KAKAO %>');
+  </script>
     <!-- Facebook Pixel Code -->
     <script>
       !function (f, b, e, v, n, t, s) {
