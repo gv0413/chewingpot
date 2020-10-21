@@ -2,7 +2,7 @@
   <div class="container between-component">
     <div class="wrap">
       <div class="text-center">
-        <button class="detail-btn" @click="fold(reviewInfo.id, reviewInfo.title, reviewInfo.restaurants.id, reviewInfo.restaurants.name)"> 
+        <button class="detail-btn" @click="fold(reviewInfo)"> 
           식당 정보 보기 <i class="ml-3px fas" :class="{'fa-angle-down': !isRestaurantInfoOpen, 'fa-angle-up': isRestaurantInfoOpen}"></i>
         </button> 
       </div>
@@ -66,16 +66,16 @@ export default {
     }
   },
   methods: {
-    fold: function(reviewId, reviewTitle, restaurantId, restaurantName){
+    fold: function(reviewInfo){
       this.isRestaurantInfoOpen = !this.isRestaurantInfoOpen
       if(this.isRestaurantInfoOpen) {
         this.$emit('sendOpenId', this.reviewInfo.id)
         // eslint-disable-next-line no-undef
         fbq('track', 'FindLocation', {
-          review_id : reviewId,
-          review_title: reviewTitle,
-          restaurant_id: restaurantId,
-          restaurant_name: restaurantName
+          review_id : reviewInfo.id,
+          review_title: reviewInfo.title,
+          restaurant_id: (reviewInfo.restaurants || {}).id,
+          restaurant_name: (reviewInfo.restaurants || {}).name
         })
       } 
     },
