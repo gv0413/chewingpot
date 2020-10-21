@@ -151,10 +151,16 @@ export default {
       })
     },
     sendLink() {
+      let kakaoMapUrl
+      if (this.reviewInfo.restaurants) {
+        kakaoMapUrl = `https://map.kakao.com/link/map/${this.reviewInfo.restaurants.kakaomap_id}`
+      } else {
+        kakaoMapUrl = `https://map.kakao.com/link/search/식당 정보가 없습니다.`
+      }
       window.Kakao.Link.sendDefault({
         objectType: 'feed',
         content: {
-          title: this.reviewInfo.restaurants.name,
+          title: (this.reviewInfo.restaurants || {}).name || '츄잉팟',
           description: this.reviewInfo.title,
           imageUrl: this.reviewInfo.thumbnail_url,
           link: {
@@ -178,8 +184,8 @@ export default {
           {
             title: '지도 보기',
             link: {
-              mobileWebUrl: `https://map.kakao.com/link/map/${this.reviewInfo.restaurants.kakaomap_id}`,
-              webUrl: `https://map.kakao.com/link/map/${this.reviewInfo.restaurants.kakaomap_id}`,
+              mobileWebUrl: kakaoMapUrl,
+              webUrl: kakaoMapUrl,
             },
           },
         ],
