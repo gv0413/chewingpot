@@ -164,8 +164,8 @@ export default {
           description: this.reviewInfo.title,
           imageUrl: this.reviewInfo.thumbnail_url,
           link: {
-            mobileWebUrl: `https://youtube.com/watch?v=${this.reviewInfo.youtube_id}`,
-            webUrl: `https://youtube.com/watch?v=${this.reviewInfo.youtube_id}`,
+            mobileWebUrl: `${process.env.VUE_APP_DOMAIN}/${this.reviewInfo.id}`,
+            webUrl: `${process.env.VUE_APP_DOMAIN}/${this.reviewInfo.id}`,
           },
         },
         // social: {
@@ -177,8 +177,8 @@ export default {
           {
             title: '웹으로 보기',
             link: {
-              mobileWebUrl: `https://youtube.com/watch?v=${this.reviewInfo.youtube_id}`,
-              webUrl: `https://youtube.com/watch?v=${this.reviewInfo.youtube_id}`,
+              mobileWebUrl: `${process.env.VUE_APP_DOMAIN}/${this.reviewInfo.id}`,
+              webUrl: `${process.env.VUE_APP_DOMAIN}/${this.reviewInfo.id}`,
             },
           },
           {
