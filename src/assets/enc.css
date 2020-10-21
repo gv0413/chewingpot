@@ -140,6 +140,7 @@ body {
 .chewing-time-btn:last-child { margin-bottom: 8px;}
 .chewing-time-btn:focus { background-color: #FCE9E7; color: #F84C1C; border: 1px solid white;}
 .chewing-time-btn:hover { background-color: #FCE9E7; opacity: 0.7; color: #F84C1C; border: 1px solid white;}
-.chewing-pin {font-size:28px; margin-left: 8px;}
-.chewing-pin-wrap {position: relative; top: -10px;}
+.chewing-pin {font-size:24px; margin-left: 8px;}
+.chewing-pin-wrap {position: relative;}
 .tel {border: 1px solid #FCE9E7; border-radius: 25px; display: block; width: 100%; text-decoration: none; padding:5px 0px; color: #000000; margin-top: 8px; color:#F84C1C;}
+.share {font-size: 16px; margin-right: 6px; position: relative; top: 3px;}

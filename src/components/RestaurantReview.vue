@@ -8,6 +8,7 @@
         <div class="width-100 flex column">
           <div class="flex">
             <p class="review-title t_bk width-100">{{reviewInfo.title}}</p>
+            <i id="kakao-link-btn" class="fas fa-share-alt t-primary share" @click="sendLink"></i>
             <a href="javascript:void(0);" class="chewing-pin-wrap" @click="togglePinId(reviewInfo.id, reviewInfo.title)">
               <i :class="{'t-primary': isPin, 't-secondary': !isPin}" class="fas fa-bookmark chewing-pin"></i>
             </a>
@@ -147,6 +148,41 @@ export default {
         review_title: reviewTitle,
         keyword_id: keywordId,
         content_name: keywordName
+      })
+    },
+    sendLink() {
+      window.Kakao.Link.sendDefault({
+        objectType: 'feed',
+        content: {
+          title: this.reviewInfo.restaurants.name,
+          description: this.reviewInfo.title,
+          imageUrl: this.reviewInfo.thumbnail_url,
+          link: {
+            mobileWebUrl: `https://youtube.com/watch?v=${this.reviewInfo.youtube_id}`,
+            webUrl: `https://youtube.com/watch?v=${this.reviewInfo.youtube_id}`,
+          },
+        },
+        // social: {
+        //   likeCount: 286,
+        //   commentCount: 45,
+        //   sharedCount: 845,
+        // },
+        buttons: [
+          {
+            title: '웹으로 보기',
+            link: {
+              mobileWebUrl: `https://youtube.com/watch?v=${this.reviewInfo.youtube_id}`,
+              webUrl: `https://youtube.com/watch?v=${this.reviewInfo.youtube_id}`,
+            },
+          },
+          {
+            title: '지도 보기',
+            link: {
+              mobileWebUrl: `https://map.kakao.com/link/map/${this.reviewInfo.restaurants.kakaomap_id}`,
+              webUrl: `https://map.kakao.com/link/map/${this.reviewInfo.restaurants.kakaomap_id}`,
+            },
+          },
+        ],
       })
     }
   }
