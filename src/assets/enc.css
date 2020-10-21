@@ -91,6 +91,7 @@ button {outline: 0;}
 .mr-3 { margin-right: 3rem;}
 .mr-4 { margin-right: 4rem;}
 .mr-5 { margin-right: 5rem;}
+.ml-3px {margin-left: 3px;}
 .ml-1 { margin-left: 1rem;}
 .ml-2 { margin-left: 2rem;}
 .ml-3 { margin-left: 3rem;}
@@ -139,6 +140,10 @@ body {
 .chewing-time-btn:last-child { margin-bottom: 8px;}
 .chewing-time-btn:focus { background-color: #FCE9E7; color: #F84C1C; border: 1px solid white;}
 .chewing-time-btn:hover { background-color: #FCE9E7; opacity: 0.7; color: #F84C1C; border: 1px solid white;}
-.chewing-pin {font-size:28px; margin-left: 8px;}
-.chewing-pin-wrap {position: relative; top: -10px;}
+.chewing-pin {font-size:24px; margin-left: 8px;}
+.chewing-pin-wrap {position: relative;}
 .tel {border: 1px solid #FCE9E7; border-radius: 25px; display: block; width: 100%; text-decoration: none; padding:5px 0px; color: #000000; margin-top: 8px; color:#F84C1C;}
+.share {font-size: 16px; margin-right: 6px; position: relative; top: 3px;}
+.detail-wrap { position: relative; top: -50px;}
+.deco-none {text-decoration: none;}
+.view-more-btn {  color: #F84C1C; width: 100%; border-radius: 25px; background-color: #FCE9E7;}

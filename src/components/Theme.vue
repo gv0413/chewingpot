@@ -70,6 +70,10 @@ export default {
       this.currentIndex = tpoCategoryIndex
       const parameter = {tpoCategory: this.tpoCategory}
       this.$emit('parent', parameter)
+      // eslint-disable-next-line no-undef
+      fbq('track', 'Search', {
+        search_string: String(this.tpoCategory),
+      })
     },
     sendPin: function() {
       this.tpoCategory = 'pin'

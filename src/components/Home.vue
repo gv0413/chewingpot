@@ -2,18 +2,23 @@
   <div class="background">
     <Header></Header>
     <Theme @parent="handleEvent" v-bind:isNext="isNext"></Theme>
-    <div v-if="!isPin" v-infinite-scroll="loadMore" :infinite-scroll-disabled="busy" infinite-scroll-distance="100">
+    <div v-if="!isPin">
       <div v-for="(reviewInfo, i) in data" :key="i">
         <restaurantReview v-bind:reviewInfo="reviewInfo" @getSelectedKeywords="getSelectedKeywords"></restaurantReview>
         <restaurantInfo v-bind:reviewInfo="reviewInfo" v-bind:focusedInfoId="focusedInfoId" @sendOpenId="handleOpenEvent"></restaurantInfo>
       </div>
+      <infinite-loading :identifier="infiniteId" @infinite="loadMore" class="text-center bc-white pt-1"></infinite-loading>
     </div>
     <div v-else>
-      <div v-if="data.length === 0" class="text-center bc-white pt-1"> 북마크에 등록된 영상이 없습니다. </div>
-      <div  v-for="(reviewInfo, i) in data" :key="i">
+      <div v-for="(reviewInfo, i) in data" :key="i">
         <restaurantReview v-bind:reviewInfo="reviewInfo"></restaurantReview>
         <restaurantInfo v-bind:reviewInfo="reviewInfo" v-bind:focusedInfoId="focusedInfoId" @sendOpenId="handleOpenEvent"></restaurantInfo>
       </div>
+      <infinite-loading :identifier="infiniteId * 2" @infinite="loadPin" class="text-center bc-white pt-1">
+        <div slot="spinner">Loading...</div>
+        <div slot="no-more">No more message</div>
+        <div slot="no-results">북마크에 등록된 영상이 없습니다.</div>
+      </infinite-loading>
     </div>
   </div>
 </template>
@@ -45,6 +50,7 @@ export default {
       isNext: false,
       focusedInfoId: undefined,
       isPin: false,
+      infiniteId: +new Date(),
     }
   },
   created() {
@@ -61,19 +67,9 @@ export default {
       this.prevData = [0,0,0,0,0]
       this.isPin = false
     },
-    loadMore: function() {
+    loadMore: function($state) {
       const dataIds = this.data.map(data => data.id)
       const prevLoaded = dataIds.slice(50 * (Math.floor(dataIds.length / 50))).join()
-      if(this.prevData.length === 0) {
-        const result = window.confirm('현재 카테고리의 모든 컨텐츠를 보셨습니다.\n다음 카테고리로 넘어가시겠습니까?');
-        if (result) {
-          this.isNext = true
-          this.initParams()
-        } else {
-          this.prevData = [0]
-        }
-        return
-      }
       this.busy = true
       
       let url = `/api/video_reviews?randomSeed=${this.randomSeed}&prevLoaded=${prevLoaded}&prevLoadedLength=${this.data.length}`;
@@ -85,6 +81,7 @@ export default {
       }
       axios.get(url)
         .then((response) => {
+          if (!$state)  return
           response.data.data.forEach(element => {
             this.data.push(element)
           })
@@ -92,6 +89,19 @@ export default {
           this.prevData = response.data.data
           this.cursorId = this.data[this.data.length - 1].id
           this.selectedKeywords = ''
+
+          if (this.prevData.length === 0) {
+            $state.complete();
+            const result = window.confirm('현재 카테고리의 모든 컨텐츠를 보셨습니다.\n다음 카테고리로 넘어가시겠습니까?');
+            if (result) {
+              this.isNext = true
+              this.initParams()
+            } else {
+              this.prevData = [0]
+            }
+          } else {
+            $state.loaded();
+          }
         })
         .catch((error) => {
           console.log(error);
@@ -101,18 +111,20 @@ export default {
         })
       
     },
-    loadPin: function() {
+    loadPin: function($state) {
       const reviewIds = JSON.parse("["+localStorage.getItem('pinIds')+"]")
       let url = `/api/video_reviews/by-ids?reviewIds=${JSON.stringify(reviewIds)}`
       this.busy = true
+      this.data = []
       axios.get(url)
         .then((response) => {
-          this.data = []
+          if (!$state)  return
           response.data.data.forEach(element => {
             this.data.push(element)
           })
           this.isRestaurantInfoFoldeds = []
           this.isScrollDisabled = true
+          $state.complete();
         })
         .catch((error) => {
           console.log(error);
@@ -125,6 +137,7 @@ export default {
       this.isNext = false
       const {tpoCategory} = event
       
+      this.infiniteId += 1
       if(tpoCategory === 'pin') {
         this.isPin = true
         this.loadPin()
