@@ -31,6 +31,11 @@ jobs:
         
       - name: build
         run: npm run build
+        env: 
+          NODE_ENV: "production"
+          BASE_URL: "/"
+          VUE_APP_DOMAIN: "https://www.chewingpot.com"
+          VUE_APP_KAKAO: ${{ secrets.VUE_APP_KAKAO }}
 
       - name: Add public IP to AWS security group
         uses: sohelamin/aws-security-group-add-ip-action@master
