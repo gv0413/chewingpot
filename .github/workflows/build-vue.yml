@@ -1,0 +1,50 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Node.js CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.11.0]
+
+    steps:
+    - uses: actions/checkout@v2
+      
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+     
+    - name: build
+      run: npm run build
+    
+    - name: Add public IP to AWS security group
+      uses: sohelamin/aws-security-group-add-ip-action@master
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: 'ap-northeast-2'
+        aws-security-group-id: ${{ secrets.AWS_SECURITY_GROUP_ID }}
+        port: '22'
+        description: 'GitHub Action'
+      
+    - name: deploy file
+      uses: wlixcc/SFTP-Deploy-Action@v1.0
+      with:
+        username: 'ec2-user'
+        server: '3.34.238.144'
+        ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }} 
+        local_path: './build'
+        remote_path: '/home/ec2-user/en-c-1/back/public'
+        args: '-o ConnectTimeout=5'
