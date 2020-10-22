@@ -1,5 +1,5 @@
 module.exports = {
-  outputDir: '../en-c-1/back/public',
+  outputDir: './build',
   publicPath: '',
   devServer: {
     proxy: {
