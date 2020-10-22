@@ -16,8 +16,7 @@
       </div>
       <infinite-loading :identifier="infiniteId * 2" @infinite="loadPin" class="text-center bc-white pt-1">
         <div slot="spinner">Loading...</div>
-        <div slot="no-more">No more message</div>
-        <div slot="no-results">북마크에 등록된 영상이 없습니다.</div>
+        <div slot="no-more">No more Data :)</div>
       </infinite-loading>
     </div>
   </div>
