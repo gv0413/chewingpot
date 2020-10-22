@@ -20,12 +20,6 @@
         </div>
       </div>
       <youtube class="mt-1 width-100" :video-id="reviewInfo.youtube_id" ref="youtube" @playing="playing" :fitParent="true" :resize="true" :player-vars="playerVars" />
-      <span v-for="(keyword, i) in keywords" :key="i">
-        <span v-if="keyword.is_tpo==true" class="tag-container f13" >
-          <span class="tag">#{{keyword.name}}</span>
-        </span>
-      </span>
-      <hr class="border-gry mt-5px">
       <div class="chewing-time-btn-wrap">
         <div v-for="(keyword, i) in keywords" :key="i">
           <button v-if="keyword.video_time" class="pr-05 pl-05 chewing-time-btn" 
