@@ -54,5 +54,5 @@ jobs:
           server: '3.34.238.144'
           ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }} 
           local_path: './build'
-          remote_path: '/home/ec2-user/en-c-1/back/public'
+          remote_path: '/home/ec2-user/en-c-1/back'
           args: '-o ConnectTimeout=5'
