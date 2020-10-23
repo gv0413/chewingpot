@@ -8,7 +8,7 @@
         <div class="width-100 flex column">
           <div class="flex">
             <p class="review-title t_bk width-100">{{reviewInfo.title}}</p>
-            <i id="kakao-link-btn" class="fas fa-share-alt t-primary share" @click="sendLink"></i>
+            <i id="kakao-link-btn" class="fas fa-share-alt t-primary share" @click="[sendLink(), addShareFbq(reviewInfo)]"></i>
             <a href="javascript:void(0);" class="chewing-pin-wrap" @click="togglePinId(reviewInfo.id, reviewInfo.title)">
               <i :class="{'t-primary': isPin, 't-secondary': !isPin}" class="fas fa-bookmark chewing-pin"></i>
             </a>
@@ -183,6 +183,14 @@ export default {
             },
           },
         ],
+      })
+    },
+    addShareFbq(sharedReviewInfo) {
+      // TODO: _removed_값 해결되면 이벤트 바꿔야 합니다
+      // eslint-disable-next-line no-undef
+      fbq('track', 'CompleteRegistration', {
+        value: sharedReviewInfo.id,
+        content_name: sharedReviewInfo.title,
       })
     }
   }
