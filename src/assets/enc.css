@@ -130,7 +130,7 @@ body {
 .theme-btn { border-radius: 14px; padding: 5px 12px; background-color: #fff; color: #F84C1C; border: 1px solid #F84C1C;}
 .theme-btn:hover { background-color: #fce0e7; color: #F84C1C; border: 1px solid white;}
 .theme-btn.on {background-color: #F84C1C; color: white; border: 1px solid white;}
-.chewing-time-btn-wrap { height: 76px; overflow-y: scroll; padding-top: 8px;}
+.chewing-time-btn-wrap { height: 76px; overflow-y: scroll; padding-top: 8px; padding-bottom: 10px;}
 .chewing-time-btn-wrap::-webkit-scrollbar { width: 6px;}
 .chewing-time-btn-wrap::-webkit-scrollbar-thumb { background-color: #999999; opacity: 0.3; border-radius: 13px;}
 .chewing-time-btn-wrap::-webkit-scrollbar-track { background-color: #fff;}
@@ -143,7 +143,7 @@ body {
 .chewing-pin {font-size:24px; margin-left: 8px;}
 .chewing-pin-wrap {position: relative;}
 .tel {border: 1px solid #FCE9E7; border-radius: 25px; display: block; width: 100%; text-decoration: none; padding:5px 0px; color: #000000; margin-top: 8px; color:#F84C1C;}
-.share {font-size: 16px; margin-right: 6px; position: relative; top: 3px;}
+.share {font-size: 16px; margin-right: 6px; position: relative; top: 3px; cursor: pointer;}
 .detail-wrap { position: relative; top: -50px;}
 .deco-none {text-decoration: none;}
 .view-more-btn {  color: #F84C1C; width: 100%; border-radius: 25px; background-color: #FCE9E7;}

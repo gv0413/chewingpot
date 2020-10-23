@@ -8,7 +8,7 @@
         <div class="width-100 flex column">
           <div class="flex">
             <p class="review-title t_bk width-100">{{reviewInfo.title}}</p>
-            <i id="kakao-link-btn" class="fas fa-share-alt t-primary share" @click="sendLink"></i>
+            <i id="kakao-link-btn" class="fas fa-share-alt t-primary share" @click="[sendLink(), addShareFbq(reviewInfo)]"></i>
             <a href="javascript:void(0);" class="chewing-pin-wrap" @click="togglePinId(reviewInfo.id, reviewInfo.title)">
               <i :class="{'t-primary': isPin, 't-secondary': !isPin}" class="fas fa-bookmark chewing-pin"></i>
             </a>
@@ -20,12 +20,6 @@
         </div>
       </div>
       <youtube class="mt-1 width-100" :video-id="reviewInfo.youtube_id" ref="youtube" @playing="playing" :fitParent="true" :resize="true" :player-vars="playerVars" />
-      <span v-for="(keyword, i) in keywords" :key="i">
-        <span v-if="keyword.is_tpo==true" class="tag-container f13" >
-          <span class="tag">#{{keyword.name}}</span>
-        </span>
-      </span>
-      <hr class="border-gry mt-5px">
       <div class="chewing-time-btn-wrap">
         <div v-for="(keyword, i) in keywords" :key="i">
           <button v-if="keyword.video_time" class="pr-05 pl-05 chewing-time-btn" 
@@ -189,6 +183,14 @@ export default {
             },
           },
         ],
+      })
+    },
+    addShareFbq(sharedReviewInfo) {
+      // TODO: _removed_값 해결되면 이벤트 바꿔야 합니다
+      // eslint-disable-next-line no-undef
+      fbq('track', 'CompleteRegistration', {
+        value: sharedReviewInfo.id,
+        content_name: sharedReviewInfo.title,
       })
     }
   }

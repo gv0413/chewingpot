@@ -2,12 +2,17 @@
   <div>
     <Header></Header>
     <div v-for="(reviewInfo, i) in data" :key="i" class="detail-wrap bc-white">
-      <restaurantReview v-bind:reviewInfo="reviewInfo"></restaurantReview>
-      <restaurantInfo v-bind:reviewInfo="reviewInfo"></restaurantInfo>
-      <div class="wrap text-center">
-        <button class="wrap detail-btn view-more-btn mb-2" @click="$router.push({name: 'home'})">
-          다른 리뷰 보기
-        </button>
+      <div v-if="reviewInfo.is_visible">
+        <restaurantReview v-bind:reviewInfo="reviewInfo"></restaurantReview>
+        <restaurantInfo v-bind:reviewInfo="reviewInfo"></restaurantInfo>
+        <div class="wrap text-center">
+          <button class="wrap detail-btn view-more-btn mb-2" @click="$router.push({name: 'home'})">
+            다른 리뷰 보기
+          </button>
+        </div>
+      </div>
+      <div v-else class="text-center">
+        삭제되었거나 요청에 의해 가려진 콘텐츠입니다.
       </div>
     </div>
   </div>
