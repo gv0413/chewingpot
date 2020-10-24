@@ -1,9 +1,9 @@
 <template>
-  <div class="header text-center bc-white">
+  <header class="header text-center bc-white">
     <a href="/">
       <img src="../assets/img/logo-name.png" alt="" class="logo">
     </a>
-  </div>
+  </header>
 </template>
 
 <script>
