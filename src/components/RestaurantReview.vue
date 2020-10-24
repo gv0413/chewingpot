@@ -1,13 +1,13 @@
 <template>
-  <div class="container pt-10px">
-    <div class="wrap">
+  <article class="container pt-10px">
+    <figure class="wrap">
       <div class="review-info-wrap">
         <div>
           <img class="channel-img" :src="reviewInfo.channels.thumbnail_url" width="50px"><br>
         </div>
         <div class="width-100 flex column">
           <div class="flex">
-            <p class="review-title t_bk width-100">{{reviewInfo.title}}</p>
+            <h6 class="review-title t_bk width-100 font-weight-400">{{reviewInfo.title}}</h6>
             <i id="kakao-link-btn" class="fas fa-share-alt t-primary share" @click="[sendLink(), addShareFbq(reviewInfo)]"></i>
             <a href="javascript:void(0);" class="chewing-pin-wrap" @click="togglePinId(reviewInfo.id, reviewInfo.title)">
               <i :class="{'t-primary': isPin, 't-secondary': !isPin}" class="fas fa-bookmark chewing-pin"></i>
@@ -30,8 +30,8 @@
         </div>
       </div>
       <hr class="border-gry" style="clear:both;">
-    </div>
-  </div>
+    </figure>
+  </article>
 </template>
 
 <script>
