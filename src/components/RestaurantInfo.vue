@@ -77,6 +77,13 @@ export default {
           restaurant_id: (reviewInfo.restaurants || {}).id,
           restaurant_name: (reviewInfo.restaurants || {}).name
         })
+
+        // eslint-disable-next-line no-undef
+        gtag('event', 'find_location', {
+          'event_category': reviewInfo.id + ';' + reviewInfo.title,
+          'event_label': (reviewInfo.restaurants || {}).name,
+          'value': (reviewInfo.restaurants || {}).id,
+        })
       } 
     },
     addContactFbq: function(reviewId, reviewTitle, restaurantId, restaurantName) {
@@ -86,6 +93,13 @@ export default {
         review_title: reviewTitle,
         restaurant_id: restaurantId,
         restaurant_name: restaurantName
+      })
+
+      // eslint-disable-next-line no-undef
+      gtag('event', 'contact', {
+        'event_category': reviewId + ';' + reviewTitle,
+        'event_label' : restaurantName,
+        'value': restaurantId,
       })
     }
   }

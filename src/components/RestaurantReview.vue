@@ -121,6 +121,13 @@ export default {
           content_ids: [String(id)],
           content_name: title
         })
+
+        // eslint-disable-next-line no-undef
+        gtag('event', 'add_to_wishlist', {
+          'event_category': 'bookmark',
+          'event_label': title,
+          'value': id,
+        })
       }
     },
     isPinned(id) {
@@ -142,6 +149,13 @@ export default {
         review_title: reviewTitle,
         keyword_id: keywordId,
         content_name: keywordName
+      })
+
+      // eslint-disable-next-line no-undef
+      gtag('event', 'view_item', {
+        'event_category': reviewId + ';' + reviewTitle,
+        'event_label' : keywordName,
+        'value': keywordId,
       })
     },
     sendLink() {
@@ -191,6 +205,12 @@ export default {
       fbq('track', 'CompleteRegistration', {
         value: sharedReviewInfo.id,
         content_name: sharedReviewInfo.title,
+      })
+
+      // eslint-disable-next-line no-undef
+      gtag('event', 'share', {
+        'event_label': sharedReviewInfo.title,
+        'value': sharedReviewInfo.id,
       })
     }
   }

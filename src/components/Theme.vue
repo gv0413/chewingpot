@@ -72,6 +72,11 @@ export default {
       fbq('track', 'Search', {
         search_string: String(this.tpoCategory),
       })
+      
+      // eslint-disable-next-line no-undef
+      gtag('event', 'search', {
+        'event_label':  String(this.tpoCategory),
+      })
     },
     sendPin: function() {
       this.tpoCategory = 'pin'
