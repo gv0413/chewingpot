@@ -1,5 +1,5 @@
 <template>
-  <div class="container between-component">
+  <article class="container between-component">
     <div class="wrap">
       <div class="text-center">
         <button class="detail-btn" @click="fold(reviewInfo)"> 
@@ -36,7 +36,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </article>
 </template>
 
 <script>
