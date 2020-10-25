@@ -19,32 +19,40 @@ jobs:
         node-version: [14.11.0]
 
     steps:
-    - uses: actions/checkout@v2
-      
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-     
-    - name: build
-      run: npm run build
-    
-    - name: Add public IP to AWS security group
-      uses: sohelamin/aws-security-group-add-ip-action@master
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: 'ap-northeast-2'
-        aws-security-group-id: ${{ secrets.AWS_SECURITY_GROUP_ID }}
-        port: '22'
-        description: 'GitHub Action'
-      
-    - name: deploy file
-      uses: wlixcc/SFTP-Deploy-Action@v1.0
-      with:
-        username: 'ec2-user'
-        server: '3.34.238.144'
-        ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }} 
-        local_path: './build'
-        remote_path: '/home/ec2-user/en-c-1/back/public'
-        args: '-o ConnectTimeout=5'
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: install modules
+        run: npm install
+        
+      - name: build
+        run: npm run build
+        env: 
+          NODE_ENV: "production"
+          BASE_URL: "/"
+          VUE_APP_DOMAIN: "https://www.chewingpot.com"
+          VUE_APP_KAKAO: ${{ secrets.VUE_APP_KAKAO }}
+
+      - name: Add public IP to AWS security group
+        uses: sohelamin/aws-security-group-add-ip-action@master
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: 'ap-northeast-2'
+          aws-security-group-id: ${{ secrets.AWS_SECURITY_GROUP_ID }}
+          port: '22'
+          description: 'GitHub Action'
+
+      - name: deploy file
+        uses: wlixcc/SFTP-Deploy-Action@v1.0
+        with:
+          username: 'ec2-user'
+          server: '3.34.238.144'
+          ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }} 
+          local_path: './build'
+          remote_path: '/home/ec2-user/en-c-1/back'
+          args: '-o ConnectTimeout=5'
