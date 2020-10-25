@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ scrolled: !view.atTopOfPage }" class="container pt-pb-10 between-component chewingpick">
+  <nav :class="{ scrolled: !view.atTopOfPage }" class="container pt-pb-10 between-component chewingpick">
     <div class="wrap mb-05 pt-05">
       <button v-for="(tc, i) in tpoCategories" 
               :key="i" 
@@ -13,9 +13,7 @@
               @click="sendPin()"
               :class="{on: tpoCategory === 'pin'}">북마크</button>
     </div>
-    <div>
-    </div>
-  </div>
+  </nav>
 </template>
 
 <script>
