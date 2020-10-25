@@ -2,23 +2,25 @@
   <div class="background">
     <Header></Header>
     <Theme @parent="handleEvent" v-bind:isNext="isNext"></Theme>
-    <div v-if="!isPin">
-      <div v-for="(reviewInfo, i) in data" :key="i">
-        <restaurantReview v-bind:reviewInfo="reviewInfo" @getSelectedKeywords="getSelectedKeywords"></restaurantReview>
-        <restaurantInfo v-bind:reviewInfo="reviewInfo" v-bind:focusedInfoId="focusedInfoId" @sendOpenId="handleOpenEvent"></restaurantInfo>
-      </div>
-      <infinite-loading :identifier="infiniteId" @infinite="loadMore" class="text-center bc-white pt-1"></infinite-loading>
-    </div>
-    <div v-else>
-      <div v-for="(reviewInfo, i) in data" :key="i">
-        <restaurantReview v-bind:reviewInfo="reviewInfo"></restaurantReview>
-        <restaurantInfo v-bind:reviewInfo="reviewInfo" v-bind:focusedInfoId="focusedInfoId" @sendOpenId="handleOpenEvent"></restaurantInfo>
-      </div>
-      <infinite-loading :identifier="infiniteId * 2" @infinite="loadPin" class="text-center bc-white pt-1">
-        <div slot="spinner">Loading...</div>
-        <div slot="no-more">No more Data :)</div>
-      </infinite-loading>
-    </div>
+    <main>
+      <section v-if="!isPin">
+        <div v-for="(reviewInfo, i) in data" :key="i">
+          <restaurantReview v-bind:reviewInfo="reviewInfo" @getSelectedKeywords="getSelectedKeywords"></restaurantReview>
+          <restaurantInfo v-bind:reviewInfo="reviewInfo" v-bind:focusedInfoId="focusedInfoId" @sendOpenId="handleOpenEvent"></restaurantInfo>
+        </div>
+        <infinite-loading :identifier="infiniteId" @infinite="loadMore" class="text-center bc-white pt-1"></infinite-loading>
+      </section>
+      <section v-else>
+        <div v-for="(reviewInfo, i) in data" :key="i">
+          <restaurantReview v-bind:reviewInfo="reviewInfo"></restaurantReview>
+          <restaurantInfo v-bind:reviewInfo="reviewInfo" v-bind:focusedInfoId="focusedInfoId" @sendOpenId="handleOpenEvent"></restaurantInfo>
+        </div>
+        <infinite-loading :identifier="infiniteId * 2" @infinite="loadPin" class="text-center bc-white pt-1">
+          <p slot="spinner">Loading...</p>
+          <p slot="no-more">No more Data :)</p>
+        </infinite-loading>
+      </section>
+    </main>
   </div>
 </template>
 

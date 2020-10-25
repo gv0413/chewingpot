@@ -1,8 +1,8 @@
 <template>
   <div>
     <Header></Header>
-    <div v-for="(reviewInfo, i) in data" :key="i" class="detail-wrap bc-white">
-      <div v-if="reviewInfo.is_visible">
+    <main v-for="(reviewInfo, i) in data" :key="i" class="detail-wrap bc-white">
+      <section v-if="reviewInfo.is_visible">
         <restaurantReview v-bind:reviewInfo="reviewInfo"></restaurantReview>
         <restaurantInfo v-bind:reviewInfo="reviewInfo"></restaurantInfo>
         <div class="wrap text-center">
@@ -10,11 +10,11 @@
             다른 리뷰 보기
           </button>
         </div>
-      </div>
-      <div v-else class="text-center">
+      </section>
+      <section v-else class="text-center">
         삭제되었거나 요청에 의해 가려진 콘텐츠입니다.
-      </div>
-    </div>
+      </section>
+    </main>
   </div>
 </template>
 
