@@ -8,7 +8,7 @@
         <div class="width-100 flex column">
           <div class="flex">
             <h6 class="review-title t_bk width-100 font-weight-400">{{reviewInfo.title}}</h6>
-            <i id="kakao-link-btn" class="fas fa-share-alt t-primary share" @click="[sendLink(), addShareFbq(reviewInfo)]"></i>
+            <i id="kakao-link-btn" class="fas fa-share-alt t-primary share" @click="[sendLink(), addShareEventTag(reviewInfo)]"></i>
             <a href="javascript:void(0);" class="chewing-pin-wrap" @click="togglePinId(reviewInfo.id, reviewInfo.title)">
               <i :class="{'t-primary': isPin, 't-secondary': !isPin}" class="fas fa-bookmark chewing-pin"></i>
             </a>
@@ -23,7 +23,7 @@
       <div class="chewing-time-btn-wrap">
         <div v-for="(keyword, i) in keywords" :key="i">
           <button v-if="keyword.video_time" class="pr-05 pl-05 chewing-time-btn" 
-                  @click="[seekTo(timeToNumber(keyword.video_time), keyword.name), addViewContentFbq(reviewInfo.id, reviewInfo.title, keyword.id, keyword.name)]">{{keyword.name}} </button>
+                  @click="[seekTo(timeToNumber(keyword.video_time), keyword.name), addViewContentEventTag(reviewInfo.id, reviewInfo.title, keyword.id, keyword.name)]">{{keyword.name}} </button>
         </div>
         <div v-if="keywords.length==0">
           <p class="text-center empty-chewing-time"> 등록된 메뉴 정보가 없습니다.</p>
@@ -142,7 +142,7 @@ export default {
         this.isPin = true
       }
     },
-    addViewContentFbq(reviewId, reviewTitle, keywordId, keywordName) {
+    addViewContentEventTag(reviewId, reviewTitle, keywordId, keywordName) {
       // eslint-disable-next-line no-undef
       fbq('track', 'ViewContent', {
         review_id : reviewId,
@@ -199,7 +199,7 @@ export default {
         ],
       })
     },
-    addShareFbq(sharedReviewInfo) {
+    addShareEventTag(sharedReviewInfo) {
       // TODO: _removed_값 해결되면 이벤트 바꿔야 합니다
       // eslint-disable-next-line no-undef
       fbq('track', 'CompleteRegistration', {
