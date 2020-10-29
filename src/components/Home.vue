@@ -54,6 +54,15 @@ export default {
       infiniteId: +new Date(),
     }
   },
+  metaInfo: function() {
+    return{
+      meta: [
+        { name: 'description', content: '맛집을 찾아보는 과정부터 직접 먹는 그 순간까지 즐겁게!', vmid: 'description'},
+        { property: 'og:description', content: '맛집을 찾아보는 과정부터 직접 먹는 그 순간까지 즐겁게!'},
+        { property: 'og:title', content: '츄잉팟'}
+      ]
+    }
+  },
   created() {
     this.createRandomSeed()
   },
