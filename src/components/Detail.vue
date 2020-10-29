@@ -34,6 +34,22 @@ export default {
     return {
       id: this.$route.params.id,
       data : [],
+      isReviewInfoLoaded: false,
+      reviewInfo: {}
+    }
+  },
+  metaInfo: function() {
+    if(this.isReviewInfoLoaded) {
+      return{
+        title: this.reviewInfo[0].restaurants.name + ' ㅣ' || '',
+        titleTemplate: '%s 츄잉팟', 
+        // TODO : 지역 추가 시 지역 파싱해서 content에 명시
+        meta: [
+          { name: 'description', content: `강남 맛집 ${this.reviewInfo[0].restaurants.name}에 방문해보세요!`, vmid: 'description'},
+          { property: 'og:description', content: `강남 맛집 ${this.reviewInfo[0].restaurants.name}에 방문해보세요!`},
+          { property: "og:title", content: this.reviewInfo[0].restaurants.name + ' ㅣ 츄잉팟' || '츄잉팟' }
+        ]
+      }
     }
   },
   created() {
@@ -48,8 +64,10 @@ export default {
           response.data.data.forEach(element => {
             this.data.push(element)
           })
+          this.reviewInfo = this.data
           this.isRestaurantInfoFoldeds = []
           this.isScrollDisabled = true
+          this.isReviewInfoLoaded = true
         })
         .catch((error) => {
           console.log(error);
@@ -57,8 +75,8 @@ export default {
         .finally(() => {
           this.busy = false
         })
-    }
-  }
+    },
+  },
 }
 </script>
 
