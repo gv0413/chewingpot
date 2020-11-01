@@ -131,7 +131,12 @@ body {
 .detail-btn { padding-top: 10px; padding-bottom: 10px; font-size: 14px; border: none; outline: 0; background-color: #fff; cursor: pointer; width: 100%;}
 .detail-btn:focus { border: none;}
 .theme-btn { border-radius: 14px; padding: 5px 12px; background-color: #fff; color: #F84C1C; border: 1px solid #F84C1C; display: inline-block !important;}
-.select{padding: 4px; border: none; border-bottom: 1px solid #F84C1C; margin-right: 10px; }
+.select{padding: 4px; width: 48px; border: none; border-bottom: 1px solid #F84C1C; margin-right: 10px; outline: none;
+-webkit-appearance: none; -moz-appearance: none; appearance: none; border-radius: 0;}
+select::-ms-expand { display: none; }
+label {position:relative;}
+label:after { content:"\f078"; font-family: "FontAwesome"; font-size: 11px; color:#F84C1C; right:13px; top:4px; padding:0 0 2px; position:absolute; pointer-events:none; }
+label:before { content:''; right:4px; top:0px; width:2px; height:18px; background:#fff; position:absolute; pointer-events:none; display:block; }
 .theme-btn:hover { background-color: #fce0e7; color: #F84C1C; border: 1px solid white;}
 .theme-btn.on {background-color: #F84C1C; color: white; border: 1px solid white;}
 .chewing-time-btn-wrap { height: 76px; overflow-y: scroll; padding-top: 8px; padding-bottom: 10px;}
