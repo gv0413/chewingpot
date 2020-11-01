@@ -11,12 +11,14 @@
                 :class="{on: tpoCategory === 'pin'}"><i class="fas fa-bookmark"></i></button>
       </header>
       <nav class="wrap mb-05 pt-05 scroll-x">
-        <select name="time" v-model="selectedTime" class="select t-primary">
-          <option value="morning">아침</option>
-          <option value="afternoon">점심</option>
-          <option value="evening">저녁</option>
-          <option value="total">전체</option>
-        </select>
+        <label for="">
+          <select name="time" v-model="selectedTime" class="select t-primary">
+            <option value="morning">아침</option>
+            <option value="afternoon">점심</option>
+            <option value="evening">저녁</option>
+            <option value="total">전체</option>
+          </select>
+        </label>
         <button v-for="(tc, i) in tpoCategories" 
                 :key="i" 
                 @click="sendTPO(i)"
@@ -126,5 +128,4 @@ export default {
 </script>
 
 <style>
-
 </style>
