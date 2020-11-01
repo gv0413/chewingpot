@@ -1,6 +1,5 @@
 <template>
   <div class="background">
-    <Header></Header>
     <Theme @parent="handleEvent" v-bind:isNext="isNext"></Theme>
     <main>
       <section v-if="!isPin">
@@ -26,14 +25,12 @@
 
 <script>
 import axios from 'axios'
-import Header from './Header.vue'
 import RestaurantReview from './RestaurantReview.vue'
 import RestaurantInfo from './RestaurantInfo.vue'
 import Theme from './Theme.vue'
 
 export default {
   components: {
-    Header,
     RestaurantReview,
     RestaurantInfo,
     Theme

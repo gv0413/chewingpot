@@ -1,19 +1,35 @@
 <template>
-  <nav :class="{ scrolled: !view.atTopOfPage }" class="container pt-pb-10 between-component chewingpick">
-    <div class="wrap mb-05 pt-05">
-      <button v-for="(tc, i) in tpoCategories" 
-              :key="i" 
-              @click="sendTPO(i)"
-              class="mr-10px theme-btn"
-              :class="{ on: tpoCategory === tc }"
-              >
-              {{tc}}
-      </button>
-      <button class="mr-10 theme-btn" 
-              @click="sendPin()"
-              :class="{on: tpoCategory === 'pin'}">북마크</button>
+  <div>
+    <div :class="{ scrolled: !view.atTopOfPage }" class="container pb-10px between-component chewingpick">
+      <header class="wrap header bc-white">
+        <a href="/">
+          <img src="../assets/img/logo-name.png" alt="" class="logo">
+        </a>
+        <button class="mr-10 theme-btn" 
+                @click="sendPin()"
+                style="float: right"
+                :class="{on: tpoCategory === 'pin'}"><i class="fas fa-bookmark"></i></button>
+      </header>
+      <nav class="wrap mb-05 pt-05 scroll-x">
+        <select name="time" v-model="selectedTime" class="select t-primary">
+          <option value="morning">아침</option>
+          <option value="afternoon">점심</option>
+          <option value="evening">저녁</option>
+          <option value="total">전체</option>
+        </select>
+        <button v-for="(tc, i) in tpoCategories" 
+                :key="i" 
+                @click="sendTPO(i)"
+                class="mr-10px theme-btn"
+                :class="{ on: tpoCategory === tc }"
+                >
+                {{tc}}
+        </button>
+      </nav>
     </div>
-  </nav>
+  </div>
+
+  
 </template>
 
 <script>
@@ -28,7 +44,8 @@ export default {
       view: {
         atTopOfPage: true
       },
-      currentIndex: undefined
+      currentIndex: undefined,
+      selectedTime: this.getSelectedTime(new Date().getHours())
     }
   },
   props: {
@@ -37,7 +54,7 @@ export default {
     }
   },
   beforeMount() {
-    window.addEventListener('scroll', this.handleScroll);
+    window.addEventListener('scroll', this.handleScroll)
   },
   created() {
     this.loadTPO();
@@ -48,11 +65,16 @@ export default {
         this.sendTPO((this.currentIndex + 1) % this.tpoCategories.length)
         //NOTE : isNext가 바뀌면 다음 인덱스로 
       }
+    },
+    selectedTime: function(val) {
+      if (val) {
+        this.loadTPO()
+      }
     }
   },
   methods: {
     loadTPO: function() {
-      let url = '/api/tpo_categories';
+      let url = `/api/tpo_categories?time=${this.selectedTime}`
       axios.get(url)
         .then((response) => {
           this.tpoCategories = response.data.data.tpo_categories
@@ -86,6 +108,17 @@ export default {
       }else{
           // user is at top of page
           if(!this.view.atTopOfPage) this.view.atTopOfPage = true
+      }
+    },
+    getSelectedTime(hour) {
+      if( hour >= 5 && hour <= 11 ){
+        return 'morning'
+      } else if(hour >= 12 && hour <= 16) {
+        return 'afternoon'
+      } else if((hour >= 17 && hour <=23) || (hour >= 0 && hour <=2)){
+        return 'evening'
+      } else {
+        return 'total'
       }
     }
   }
