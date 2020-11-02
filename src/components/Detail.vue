@@ -1,13 +1,15 @@
 <template>
   <div>
-    <Header></Header>
+    <header class="detail-header">
+      <Header></Header>
+    </header>
     <main v-for="(reviewInfo, i) in data" :key="i" class="detail-wrap bc-white">
       <section v-if="reviewInfo.is_visible">
         <restaurantReview v-bind:reviewInfo="reviewInfo"></restaurantReview>
         <restaurantInfo v-bind:reviewInfo="reviewInfo"></restaurantInfo>
         <div class="wrap text-center">
           <button class="wrap detail-btn view-more-btn mb-2" @click="$router.push({name: 'home'})">
-            다른 리뷰 보기
+            다른 리뷰가 보고싶다면?
           </button>
         </div>
       </section>

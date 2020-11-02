@@ -12,7 +12,7 @@
       </header>
       <nav class="wrap mb-05 pb-10px scroll-x">
         <label for="">
-          <select name="time" v-model="selectedTime" class="select t-primary">
+          <select name="time" v-model="selectedTime" class="select t-primary bc-white">
             <option value="morning">아침</option>
             <option value="afternoon">점심</option>
             <option value="evening">저녁</option>
