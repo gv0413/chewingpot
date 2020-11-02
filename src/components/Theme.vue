@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div :class="{ scrolled: !view.atTopOfPage }" class="container pb-10px between-component chewingpick">
+    <div :class="{ scrolled: !view.atTopOfPage }" class="container pb-05 between-component chewingpick">
       <header class="wrap header bc-white">
         <a href="/">
           <img src="../assets/img/logo-name.png" alt="" class="logo">
@@ -10,7 +10,7 @@
                 style="float: right"
                 :class="{on: tpoCategory === 'pin'}"><i class="fas fa-bookmark"></i></button>
       </header>
-      <nav class="wrap mb-05 pt-05 scroll-x">
+      <nav class="wrap mb-05 pb-10px scroll-x">
         <label for="">
           <select name="time" v-model="selectedTime" class="select t-primary">
             <option value="morning">아침</option>
