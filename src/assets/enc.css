@@ -115,7 +115,7 @@ button {outline: 0;}
   max-width: 720px;
 }
 body {
-  padding-top: 110px;
+  padding-top: 90px;
 }
 .scroll-x {overflow: auto; white-space: nowrap;}
 .chewingpick {position: fixed; top: -10px; left: 0; right: 0; z-index: 10; margin-top: 10px;}
@@ -129,6 +129,7 @@ body {
 .margin-0 { margin: 0 }
 .tag-container { height: 24px; padding-top: 5px;}
 .tag {margin-right: 12px;}
+.detail-header {position: absolute; top: 0; width: 100%;}
 .detail-btn { padding-top: 10px; padding-bottom: 10px; font-size: 14px; border: none; outline: 0; background-color: #fff; cursor: pointer; width: 100%;}
 .detail-btn:focus { border: none;}
 .theme-btn { border-radius: 14px; padding: 5px 12px; background-color: #fff; color: #F84C1C; border: 1px solid #F84C1C; display: inline-block !important;}
