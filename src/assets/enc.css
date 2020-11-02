@@ -43,6 +43,7 @@ button {outline: 0;}
 .container { width: 100%; background-color: #fff;}
 .p-5px {padding: 5px;}
 .pt-pb-5 {padding-top: 5px; padding-bottom: 5px;}
+.pt-pb-10 {padding-top: 10px; padding-bottom: 10px;}
 .pt-10px{padding-top: 10px;}
 .between-component{margin-bottom: 10px;}
 .pt-05 {padding-top: 0.5rem;}
