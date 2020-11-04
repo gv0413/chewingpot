@@ -42,6 +42,9 @@ export default {
     },
     index: {
       type: Number
+    },
+    currentPlayingReviewId: {
+      type: String
     }
   },
   data: function() {
@@ -77,6 +80,11 @@ export default {
       if (val) {
         this.isPinned(val)
       }
+    },
+    currentPlayingReviewId(val) {
+      if (val && val !== this.reviewInfo.youtube_id) {
+        this.player.pauseVideo()
+      }
     }
   },
   methods: {
@@ -88,6 +96,8 @@ export default {
       this.sendSelectedKeywords(selectedKeyword)
     },
     playing() {
+      // NOTE: playing된 리뷰의 id를 상위로 emit
+      this.$emit('sendPlayingReviewId', this.reviewInfo.youtube_id)
     },
     timeToNumber(timeString) {
       const parsedString = timeString.split('T')[1].split(':')
