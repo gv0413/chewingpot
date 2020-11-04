@@ -4,14 +4,14 @@
     <main>
       <section v-if="!isPin">
         <div v-for="(reviewInfo, i) in data" :key="i">
-          <restaurantReview v-bind:reviewInfo="reviewInfo" @getSelectedKeywords="getSelectedKeywords"></restaurantReview>
+          <restaurantReview @sendPlayingReviewId="handleSendPlayingEvent" v-bind:reviewInfo="reviewInfo" v-bind:currentPlayingReviewId="currentPlayingReviewId" @getSelectedKeywords="getSelectedKeywords"></restaurantReview>
           <restaurantInfo v-bind:reviewInfo="reviewInfo" v-bind:focusedInfoId="focusedInfoId" @sendOpenId="handleOpenEvent"></restaurantInfo>
         </div>
         <infinite-loading :identifier="infiniteId" @infinite="loadMore" class="text-center bc-white pt-1"></infinite-loading>
       </section>
       <section v-else>
         <div v-for="(reviewInfo, i) in data" :key="i">
-          <restaurantReview v-bind:reviewInfo="reviewInfo"></restaurantReview>
+          <restaurantReview @sendPlayingReviewId="handleSendPlayingEvent" v-bind:reviewInfo="reviewInfo" v-bind:currentPlayingReviewId="currentPlayingReviewId"></restaurantReview>
           <restaurantInfo v-bind:reviewInfo="reviewInfo" v-bind:focusedInfoId="focusedInfoId" @sendOpenId="handleOpenEvent"></restaurantInfo>
         </div>
         <infinite-loading :identifier="infiniteId * 2" @infinite="loadPin" class="text-center bc-white pt-1">
@@ -47,6 +47,7 @@ export default {
       prevData: [0,0,0,0,0],
       isNext: false,
       focusedInfoId: undefined,
+      currentPlayingReviewId: undefined,
       isPin: false,
       infiniteId: +new Date(),
     }
@@ -157,6 +158,9 @@ export default {
     },
     handleOpenEvent: function(event) {
       this.focusedInfoId = event
+    },
+    handleSendPlayingEvent: function(event) {
+      this.currentPlayingReviewId = event
     },
     getSelectedKeywords(event) {
       const selectedKeyword = event
