@@ -75,6 +75,7 @@ export default {
       
       // eslint-disable-next-line no-undef
       gtag('event', 'search', {
+        'event_category': 'tpo_select',
         'event_label':  String(this.tpoCategory),
       })
     },

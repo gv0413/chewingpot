@@ -126,7 +126,6 @@ export default {
         gtag('event', 'add_to_wishlist', {
           'event_category': 'bookmark',
           'event_label': title,
-          'value': id,
         })
       }
     },
@@ -153,9 +152,8 @@ export default {
 
       // eslint-disable-next-line no-undef
       gtag('event', 'view_item', {
-        'event_category': reviewId + ';' + reviewTitle,
-        'event_label' : keywordName,
-        'value': keywordId,
+        'event_category': 'keyword',
+        'event_label' : keywordName + ';' + reviewTitle,
       })
     },
     sendLink() {
@@ -209,8 +207,8 @@ export default {
 
       // eslint-disable-next-line no-undef
       gtag('event', 'share', {
+        'event_category': 'kakao_share',
         'event_label': sharedReviewInfo.title,
-        'value': sharedReviewInfo.id,
       })
     }
   }

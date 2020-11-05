@@ -79,10 +79,9 @@ export default {
         })
 
         // eslint-disable-next-line no-undef
-        gtag('event', 'find_location', {
-          'event_category': reviewInfo.id + ';' + reviewInfo.title,
-          'event_label': (reviewInfo.restaurants || {}).name,
-          'value': (reviewInfo.restaurants || {}).id,
+        gtag('event', 'view_item', {
+          'event_category': 'find_location',
+          'event_label': (reviewInfo.restaurants || {}).name + ';' + reviewInfo.title,
         })
       } 
     },
@@ -96,10 +95,9 @@ export default {
       })
 
       // eslint-disable-next-line no-undef
-      gtag('event', 'contact', {
-        'event_category': reviewId + ';' + reviewTitle,
-        'event_label' : restaurantName,
-        'value': restaurantId,
+      gtag('event', 'select_content', {
+        'event_category': 'contact',
+        'event_label' : restaurantName + ';' + reviewTitle,
       })
     }
   }
