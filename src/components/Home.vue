@@ -4,14 +4,14 @@
     <main>
       <section v-if="!isPin">
         <div v-for="(reviewInfo, i) in data" :key="i">
-          <restaurantReview v-bind:reviewInfo="reviewInfo" @getSelectedKeywords="getSelectedKeywords"></restaurantReview>
+          <restaurantReview @sendPlayingReviewId="handleSendPlayingEvent" v-bind:reviewInfo="reviewInfo" v-bind:currentPlayingReviewId="currentPlayingReviewId" @getSelectedKeywords="getSelectedKeywords"></restaurantReview>
           <restaurantInfo v-bind:reviewInfo="reviewInfo" v-bind:focusedInfoId="focusedInfoId" @sendOpenId="handleOpenEvent"></restaurantInfo>
         </div>
         <infinite-loading :identifier="infiniteId" @infinite="loadMore" class="text-center bc-white pt-1"></infinite-loading>
       </section>
       <section v-else>
         <div v-for="(reviewInfo, i) in data" :key="i">
-          <restaurantReview v-bind:reviewInfo="reviewInfo"></restaurantReview>
+          <restaurantReview @sendPlayingReviewId="handleSendPlayingEvent" v-bind:reviewInfo="reviewInfo" v-bind:currentPlayingReviewId="currentPlayingReviewId"></restaurantReview>
           <restaurantInfo v-bind:reviewInfo="reviewInfo" v-bind:focusedInfoId="focusedInfoId" @sendOpenId="handleOpenEvent"></restaurantInfo>
         </div>
         <infinite-loading :identifier="infiniteId * 2" @infinite="loadPin" class="text-center bc-white pt-1">
@@ -47,6 +47,7 @@ export default {
       prevData: [0,0,0,0,0],
       isNext: false,
       focusedInfoId: undefined,
+      currentPlayingReviewId: undefined,
       isPin: false,
       infiniteId: +new Date(),
     }
@@ -96,7 +97,8 @@ export default {
           this.prevData = response.data.data
           this.cursorId = this.data[this.data.length - 1].id
           this.selectedKeywords = ''
-
+          // eslint-disable-next-line no-undef
+          gtag('event', 'conversion', {'send_to': 'AW-482369823/yLDlCIT34OYBEJ_CgeYB'});
           if (this.prevData.length === 0) {
             $state.complete();
             const result = window.confirm('현재 카테고리의 모든 컨텐츠를 보셨습니다.\n다음 카테고리로 넘어가시겠습니까?');
@@ -157,6 +159,9 @@ export default {
     },
     handleOpenEvent: function(event) {
       this.focusedInfoId = event
+    },
+    handleSendPlayingEvent: function(event) {
+      this.currentPlayingReviewId = event
     },
     getSelectedKeywords(event) {
       const selectedKeyword = event

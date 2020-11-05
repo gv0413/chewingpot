@@ -12,7 +12,7 @@
       </header>
       <nav class="wrap mb-05 pb-10px scroll-x">
         <label for="">
-          <select name="time" v-model="selectedTime" class="select t-primary bc-white">
+          <select name="time" v-model="selectedTime" class="select t-primary bc-white" @change="selectTimeEvent(selectedTime)">
             <option value="morning">아침</option>
             <option value="afternoon">점심</option>
             <option value="evening">저녁</option>
@@ -96,6 +96,12 @@ export default {
       fbq('track', 'Search', {
         search_string: String(this.tpoCategory),
       })
+
+      // eslint-disable-next-line no-undef
+      gtag('event', 'search', {
+        'event_category': 'tpo_select',
+        'event_label':  String(this.tpoCategory),
+      })
     },
     sendPin: function() {
       this.tpoCategory = 'pin'
@@ -122,6 +128,19 @@ export default {
       } else {
         return 'total'
       }
+    },
+    selectTimeEvent(selectedTime) {
+      // eslint-disable-next-line no-undef
+      fbq('track', 'Search', {
+        content_category: 'selectTime',
+        search_string: String(selectedTime),
+      })
+
+      // eslint-disable-next-line no-undef
+      gtag('event', 'search', {
+        'event_category': 'time_select',
+        'event_label':  String(selectedTime),
+      })
     }
   }
 }
