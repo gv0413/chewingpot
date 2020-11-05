@@ -97,7 +97,8 @@ export default {
           this.prevData = response.data.data
           this.cursorId = this.data[this.data.length - 1].id
           this.selectedKeywords = ''
-
+          // eslint-disable-next-line no-undef
+          gtag('event', 'conversion', {'send_to': 'AW-482369823/yLDlCIT34OYBEJ_CgeYB'});
           if (this.prevData.length === 0) {
             $state.complete();
             const result = window.confirm('현재 카테고리의 모든 컨텐츠를 보셨습니다.\n다음 카테고리로 넘어가시겠습니까?');
