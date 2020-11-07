@@ -150,7 +150,7 @@ export default {
         this.isPin = true
       }
     },
-    addViewContentFbq(reviewId, reviewTitle, keywordId, keywordName) {
+    addViewContentEventTag(reviewId, reviewTitle, keywordId, keywordName) {
       // eslint-disable-next-line no-undef
       fbq('track', 'ViewContent', {
         review_id : reviewId,
