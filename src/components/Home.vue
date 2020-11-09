@@ -3,13 +3,13 @@
     <Theme @parent="handleEvent" @receiveLocation="receiveLocation" v-bind:isNext="isNext"></Theme>
     <main>
       <section v-if="!isPin">
-        <p class="font-weight-700 text-center bc-white pt-pb-10">실시간 인기 BEST 50</p>
+        <p v-if="!this.tpoCategory && !this.selectedLocation" class="text-center pt-pb-15 bc-whitesmoke">실시간 강남구 인기 BEST 50!</p>
         <div v-for="(reviewInfo, i) in reviewInfos" :key="i">
           <restaurantReview @sendPlayingReviewId="handleSendPlayingEvent" v-bind:reviewInfo="reviewInfo" v-bind:currentPlayingReviewId="currentPlayingReviewId" @getSelectedKeywords="getSelectedKeywords"></restaurantReview>
           <restaurantInfo v-bind:reviewInfo="reviewInfo" v-bind:focusedInfoId="focusedInfoId" @sendOpenId="handleOpenEvent"></restaurantInfo>
         </div>
         <infinite-loading :identifier="infiniteId" @infinite="loadMore" class="text-center bc-white pt-1">
-          <p slot="no-more">No more Data :)</p>
+          <p slot="no-more">더 이상 표시할 리뷰가 없습니다 :( </p>
         </infinite-loading>
       </section>
       <section v-else>
@@ -19,7 +19,7 @@
         </div>
         <infinite-loading :identifier="infiniteId * 2" @infinite="loadPin" class="text-center bc-white pt-1">
           <p slot="spinner">Loading...</p>
-          <p slot="no-more">No more Data :)</p>
+          <p slot="no-more">더 이상 표시할 리뷰가 없습니다 :( </p>
         </infinite-loading>
       </section>
     </main>
@@ -94,15 +94,12 @@ export default {
       if (this.selectedLocation) {
         url = `${url}&location=${this.selectedLocation}`
       }
-      console.log('test123123')
       axios.get(url)
         .then((response) => {
           if (!$state)  return
-          console.log('test123123')
           response.data.data.forEach(element => {
             this.reviewInfos.push(element)
           })
-          console.log('3====',this.reviewInfos)
           this.isRestaurantInfoFoldeds = []
           this.prevData = response.data.data
           this.cursorId = this.reviewInfos[this.reviewInfos.length - 1].id
@@ -111,12 +108,14 @@ export default {
           gtag('event', 'conversion', {'send_to': 'AW-482369823/yLDlCIT34OYBEJ_CgeYB'});
           if (this.prevData.length === 0) {
             $state.complete();
-            const result = window.confirm('현재 카테고리의 모든 컨텐츠를 보셨습니다.\n다음 카테고리로 넘어가시겠습니까?');
-            if (result) {
-              this.isNext = true
-              this.initParams()
-            } else {
-              this.prevData = [0]
+            if(!this.selectedLocation && this.tpoCategory){
+              const result = window.confirm('현재 카테고리의 모든 컨텐츠를 보셨습니다.\n다음 카테고리로 넘어가시겠습니까?');
+              if (result) {
+                this.isNext = true
+                this.initParams()
+              } else {
+                this.prevData = [0]
+              }
             }
           } else {
             $state.loaded();
@@ -183,10 +182,10 @@ export default {
     },
     receiveLocation: function(event) {
       this.selectedLocation = event.selectedLocation
-      // TODO
       this.isNext = false
       this.infiniteId += 1
       this.reviewInfos = []
+      this.tpoCategory = ''
       this.loadMore()
     },
     createRandomSeed() {

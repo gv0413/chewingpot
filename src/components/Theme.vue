@@ -86,17 +86,12 @@ export default {
       if (val) {
         this.loadTPO()
       }
-    },
-    selectedLocation: function(val) {
-      if (val) {
-        this.loadTPO()
-      }
     }
   },
   methods: {
     loadTPO: function() {
       let url = `/api/tpo_categories?time=${this.selectedTime}`
-      if(this.selectedLocation) {
+      if(this.selectedLocation && this.selectedLocation.length) {
         url = `${url}&location=${this.selectedLocation}`
       }
       axios.get(url)
@@ -131,6 +126,11 @@ export default {
       this.$emit('parent', parameter)
     },
     sendLocation: function() {
+      this.loadTPO()
+      if(this.selectedLocation === '') {
+        this.tpoCategory = ''
+        this.currentIndex = undefined
+      }
       const parameter = {selectedLocation: this.selectedLocation}
       this.$emit('receiveLocation', parameter)
     },
