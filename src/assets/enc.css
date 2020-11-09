@@ -11,6 +11,7 @@ button {outline: 0;}
 .border-gry {border: 1px solid #dedede;}
 .border-white {border: white} 
 .background {background-color: #f5f5f5;}
+.bc-whitesmoke {background-color: whitesmoke;}
 
 .f30 { font-size: 30px; }
 .f24 { font-size: 24px; }
@@ -31,7 +32,7 @@ button {outline: 0;}
 .t-secondary {color: #fcddd9;}
 
 .font-weight-400 { font-weight: 400; }
-.font-weight-700 { font-weight: 500; }
+.font-weight-500 { font-weight: 500; }
 .font-weight-700 { font-weight: 700; }
 .font-weight-900 { font-weight: 900; }
 
@@ -44,6 +45,7 @@ button {outline: 0;}
 .p-5px {padding: 5px;}
 .pt-pb-5 {padding-top: 5px; padding-bottom: 5px;}
 .pt-pb-10 {padding-top: 10px; padding-bottom: 10px;}
+.pt-pb-15 {padding-top: 15px; padding-bottom: 15px;}
 .pt-10px{padding-top: 10px;}
 .between-component{margin-bottom: 10px;}
 .pt-05 {padding-top: 0.5rem;}

@@ -11,6 +11,19 @@
                 :class="{on: tpoCategory === 'pin'}"><i class="fas fa-bookmark"></i></button>
       </header>
       <nav class="wrap mb-05 pb-10px scroll-x">
+        <i class="fas fa-map-marker-alt t-primary"></i>
+        <label for="">
+          <select name="time" v-model="selectedLocation" class="select t-primary bc-white" @change="sendLocation">
+            <option value="청담">청담</option>
+            <option value="논현">논현</option>
+            <option value="대치/도곡">대치</option>
+            <option value="신사/압구정">신사</option>
+            <option value="삼성">삼성</option>
+            <option value="역삼/선릉">역삼</option>
+            <option value="서초">서초</option>
+            <option value="">전체</option>
+          </select>
+        </label>
         <label for="">
           <select name="time" v-model="selectedTime" class="select t-primary bc-white" @change="selectTimeEvent(selectedTime)">
             <option value="morning">아침</option>
@@ -47,7 +60,8 @@ export default {
         atTopOfPage: true
       },
       currentIndex: undefined,
-      selectedTime: this.getSelectedTime(new Date().getHours())
+      selectedTime: this.getSelectedTime(new Date().getHours()),
+      selectedLocation: '',
     }
   },
   props: {
@@ -77,6 +91,9 @@ export default {
   methods: {
     loadTPO: function() {
       let url = `/api/tpo_categories?time=${this.selectedTime}`
+      if(this.selectedLocation && this.selectedLocation.length) {
+        url = `${url}&location=${this.selectedLocation}`
+      }
       axios.get(url)
         .then((response) => {
           this.tpoCategories = response.data.data.tpo_categories
@@ -107,6 +124,15 @@ export default {
       this.tpoCategory = 'pin'
       const parameter = {tpoCategory: this.tpoCategory}
       this.$emit('parent', parameter)
+    },
+    sendLocation: function() {
+      this.loadTPO()
+      if(this.selectedLocation === '') {
+        this.tpoCategory = ''
+        this.currentIndex = undefined
+      }
+      const parameter = {selectedLocation: this.selectedLocation}
+      this.$emit('receiveLocation', parameter)
     },
     handleScroll(){
       // when the user scrolls, check the pageYOffset
