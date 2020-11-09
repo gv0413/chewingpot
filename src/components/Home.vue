@@ -1,16 +1,19 @@
 <template>
   <div class="background">
-    <Theme @parent="handleEvent" v-bind:isNext="isNext"></Theme>
+    <Theme @parent="handleEvent" @receiveLocation="receiveLocation" v-bind:isNext="isNext"></Theme>
     <main>
       <section v-if="!isPin">
-        <div v-for="(reviewInfo, i) in data" :key="i">
+        <p class="font-weight-700 text-center bc-white pt-pb-10">실시간 인기 BEST 50</p>
+        <div v-for="(reviewInfo, i) in reviewInfos" :key="i">
           <restaurantReview @sendPlayingReviewId="handleSendPlayingEvent" v-bind:reviewInfo="reviewInfo" v-bind:currentPlayingReviewId="currentPlayingReviewId" @getSelectedKeywords="getSelectedKeywords"></restaurantReview>
           <restaurantInfo v-bind:reviewInfo="reviewInfo" v-bind:focusedInfoId="focusedInfoId" @sendOpenId="handleOpenEvent"></restaurantInfo>
         </div>
-        <infinite-loading :identifier="infiniteId" @infinite="loadMore" class="text-center bc-white pt-1"></infinite-loading>
+        <infinite-loading :identifier="infiniteId" @infinite="loadMore" class="text-center bc-white pt-1">
+          <p slot="no-more">No more Data :)</p>
+        </infinite-loading>
       </section>
       <section v-else>
-        <div v-for="(reviewInfo, i) in data" :key="i">
+        <div v-for="(reviewInfo, i) in reviewInfos" :key="i">
           <restaurantReview @sendPlayingReviewId="handleSendPlayingEvent" v-bind:reviewInfo="reviewInfo" v-bind:currentPlayingReviewId="currentPlayingReviewId"></restaurantReview>
           <restaurantInfo v-bind:reviewInfo="reviewInfo" v-bind:focusedInfoId="focusedInfoId" @sendOpenId="handleOpenEvent"></restaurantInfo>
         </div>
@@ -38,12 +41,13 @@ export default {
   data: function() {
     return {
       randomSeed: -1,
-      data: [],
+      reviewInfos: [],
       busy: false,
       tpoCategory: '',
       isRestaurantInfoFoldeds: [],
       cursorId: '',
       selectedKeywords: '',
+      selectedLocation: '',
       prevData: [0,0,0,0,0],
       isNext: false,
       focusedInfoId: undefined,
@@ -67,7 +71,7 @@ export default {
   methods: {
     //NOTE : TPO category 넘어갈 때 params 초기화
     initParams: function () {
-      this.data = []
+      this.reviewInfos = []
       this.busy = false
       this.tpoCategory = ''
       this.isRestaurantInfoFoldeds = []
@@ -76,26 +80,32 @@ export default {
       this.isPin = false
     },
     loadMore: function($state) {
-      const dataIds = this.data.map(data => data.id)
+      const dataIds = this.reviewInfos.map(reviewInfo => reviewInfo.id)
       const prevLoaded = dataIds.slice(50 * (Math.floor(dataIds.length / 50))).join()
       this.busy = true
       
-      let url = `/api/video_reviews?randomSeed=${this.randomSeed}&prevLoaded=${prevLoaded}&prevLoadedLength=${this.data.length}`;
+      let url = `/api/video_reviews?randomSeed=${this.randomSeed}&prevLoaded=${prevLoaded}&prevLoadedLength=${this.reviewInfos.length}`
       if (this.tpoCategory) {
         url = `${url}&category=${this.tpoCategory}`
       }
       if (this.selectedKeywords) {
         url = `${url}&selectedKeywords=${this.selectedKeywords}`
       }
+      if (this.selectedLocation) {
+        url = `${url}&location=${this.selectedLocation}`
+      }
+      console.log('test123123')
       axios.get(url)
         .then((response) => {
           if (!$state)  return
+          console.log('test123123')
           response.data.data.forEach(element => {
-            this.data.push(element)
+            this.reviewInfos.push(element)
           })
+          console.log('3====',this.reviewInfos)
           this.isRestaurantInfoFoldeds = []
           this.prevData = response.data.data
-          this.cursorId = this.data[this.data.length - 1].id
+          this.cursorId = this.reviewInfos[this.reviewInfos.length - 1].id
           this.selectedKeywords = ''
           // eslint-disable-next-line no-undef
           gtag('event', 'conversion', {'send_to': 'AW-482369823/yLDlCIT34OYBEJ_CgeYB'});
@@ -124,12 +134,12 @@ export default {
       const reviewIds = JSON.parse("["+localStorage.getItem('pinIds')+"]")
       let url = `/api/video_reviews/by-ids?reviewIds=${JSON.stringify(reviewIds)}`
       this.busy = true
-      this.data = []
+      this.reviewInfos = []
       axios.get(url)
         .then((response) => {
           if (!$state)  return
           response.data.data.forEach(element => {
-            this.data.push(element)
+            this.reviewInfos.push(element)
           })
           this.isRestaurantInfoFoldeds = []
           this.isScrollDisabled = true
@@ -153,7 +163,7 @@ export default {
       } else {
         this.isPin = false
         this.tpoCategory = tpoCategory
-        this.data = []
+        this.reviewInfos = []
         this.loadMore()
       }
     },
@@ -170,6 +180,14 @@ export default {
       } else {
         this.selectedKeywords += `,${selectedKeyword}`
       }
+    },
+    receiveLocation: function(event) {
+      this.selectedLocation = event.selectedLocation
+      // TODO
+      this.isNext = false
+      this.infiniteId += 1
+      this.reviewInfos = []
+      this.loadMore()
     },
     createRandomSeed() {
       this.randomSeed = Math.floor(Math.random() * 100)
