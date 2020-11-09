@@ -9,7 +9,7 @@
           <restaurantInfo v-bind:reviewInfo="reviewInfo" v-bind:focusedInfoId="focusedInfoId" @sendOpenId="handleOpenEvent"></restaurantInfo>
         </div>
         <infinite-loading :identifier="infiniteId" @infinite="loadMore" class="text-center bc-white pt-1">
-          <p slot="no-more">더 이상 표시할 리뷰가 없습니다 :( </p>
+          <p slot="no-more" class="pb-1">더 이상 표시할 리뷰가 없습니다 :( </p>
         </infinite-loading>
       </section>
       <section v-else>
@@ -18,8 +18,8 @@
           <restaurantInfo v-bind:reviewInfo="reviewInfo" v-bind:focusedInfoId="focusedInfoId" @sendOpenId="handleOpenEvent"></restaurantInfo>
         </div>
         <infinite-loading :identifier="infiniteId * 2" @infinite="loadPin" class="text-center bc-white pt-1">
-          <p slot="spinner">Loading...</p>
-          <p slot="no-more">더 이상 표시할 리뷰가 없습니다 :( </p>
+          <p slot="spinner" class="mb-05">Loading...</p>
+          <p slot="no-more" class="mb-05">더 이상 표시할 리뷰가 없습니다 :( </p>
         </infinite-loading>
       </section>
     </main>
